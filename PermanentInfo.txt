@@ -4,13 +4,12 @@ Chris   ENGLISH
 Kate    MATH
 Meredith    FRENCH
 Gareth  CRYPTO
-Nathan
-Julia
-Hugh
-Rhys
-
-Training Courses,
-MathsTraining
-EnglishTraining
-FrenchTraining
-CryptoTraining
+Nathan  MATH
+Julia   MATH
+Hugh    MATH
+Rhys    MATH
+TrainingCourses
+MathsTraining   Maths
+EnglishTraining English
+FrenchTraining  French
+CryptoTraining  Crpto

@@ -9,13 +9,13 @@ public class LoTrainingCourses{
 
     // list constructor
     // passed an int, for number of indices?
-    LoTrainingCourses(int numOfCourses) {
-        listOfTC = new ArrayList<TrainingCourse>(numOfCourses);
+    public LoTrainingCourses() {
+        listOfTC = new ArrayList<TrainingCourse>();
     }
 
 
     // adds a training course to the array list
-    protected void addCourse(TrainingCourse trainingCourse){
+    public void addCourse(TrainingCourse trainingCourse){
                 listOfTC.add(trainingCourse);
     }
 
@@ -28,8 +28,9 @@ public class LoTrainingCourses{
     public ArrayList<TrainingCourse> getListOfTC() {
         return listOfTC;
     }
-
-    // public String getcourseID(){
-    //     return courseID;
-    // }
+    public void printTcourses(){
+        for(TrainingCourse tc : listOfTC){
+            System.out.println(tc);
+        }
+    }
 }

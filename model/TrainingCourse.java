@@ -4,20 +4,15 @@ import java.util.ArrayList;
 
 public class TrainingCourse {
     
-    private String courseID;
     private String courseName;
-    private ArrayList<Teacher> ListOfTeachers;
+    private String subjectName;
+    private ArrayList<Teacher> listOfTeachers;
 
     // constructor
-    protected TrainingCourse(String name, String ID){
-        ID = courseID;
-        name = courseName;
-        ListOfTeachers = new ArrayList<Teacher>();
-    }
-
-    // getters
-    public String getCourseID(){
-        return courseID;
+    public TrainingCourse(String name, String subjectName){
+        this.courseName = name;
+        this.subjectName = subjectName;
+        listOfTeachers = new ArrayList<Teacher>();
     }
 
     public String getCourseName(){
@@ -25,6 +20,12 @@ public class TrainingCourse {
     }
 
     public ArrayList<Teacher> getListOfTeachers(){
-        return ListOfTeachers;
+        return listOfTeachers;
+    }
+    public void addTeacherToCourse(Teacher teacher){
+        listOfTeachers.add(teacher);
+    }
+    public String toString(){
+        return "" + courseName + " " + subjectName;
     }
 }

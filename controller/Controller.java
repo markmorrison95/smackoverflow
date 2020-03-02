@@ -26,6 +26,7 @@ public class Controller implements ActionListener {
     private LoTeachers lTeachers;
     private Teacher teacherName;
     private Course assignedCourse;
+    private LoTrainingCourses lTrainingCourses;
 
     public Controller() {
         /**
@@ -34,12 +35,14 @@ public class Controller implements ActionListener {
          */
         lCourses = new LoCourses();
         lTeachers = new LoTeachers();
+        lTrainingCourses = new LoTrainingCourses();
         try {
             readFileIn("PermanentInfo.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         lTeachers.printTeacher();
+        lTrainingCourses.printTcourses();
         homeWindow = new HomeWindow();
         signInButton = homeWindow.getSignInButton();
         signInButton.addActionListener(this);
@@ -128,13 +131,26 @@ public class Controller implements ActionListener {
 
     public void readFileIn(String fileName) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(fileName));
+        boolean finishedTeachers = false;
         scanner.nextLine();
         while (scanner.hasNextLine()) {
-            lTeachers.addTeacher(new Teacher(scanner.next()));
-            scanner.nextLine();
-
+            if (!finishedTeachers) {
+                String nextString = scanner.next();
+                if (nextString.contains("TrainingCourses")) {
+                    scanner.nextLine();
+                    finishedTeachers = true;
+                } else {
+                    lTeachers.addTeacher(new Teacher(nextString));
+                    scanner.next();
+                }
+            }
+            if (finishedTeachers) {
+                lTrainingCourses.addCourse(new TrainingCourse(scanner.next(), scanner.next()));
+            }
         }
+
     }
+
 
     /* 
     * 
