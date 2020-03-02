@@ -66,7 +66,4 @@ public class ClassDirectorWindow extends JFrame {
     public JLabel getUpdateLabel() {
         return this.update;
     }
-    public String getThis(){
-        return "hey";
-    }
 }
