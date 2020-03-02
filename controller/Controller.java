@@ -134,6 +134,7 @@ public class Controller implements ActionListener {
             scanner.nextLine();
 
         }
+    }
 
     /* 
     * 
