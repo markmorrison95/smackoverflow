@@ -2,71 +2,103 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.LoCourses;
+import model.LoClasses;
 import model.LoTeachers;
 import model.Teacher;
+import model.Class;
 
-public class AdminView extends JFrame implements ActionListener {
+public class AdminView extends JFrame {
 	JFrame frame;
-	LoTeachers teachers;
-	LoCourses classes;
+	JPanel panel;
+	JButton assign, send, home;
+	JComboBox<String> teacherList, classList;
+	JList mapDisplay;
+	AdminController controller;
 	
-	public AdminView(LoTeachers teachers, LoCourses classes) {
-		this.teachers = teachers;
-		this.classes = classes;
-		
-		setAdminView();
-		
-	}
 	
-	public void setAdminView() {
+	public AdminView(AdminController controller) {
+		this.controller = controller;
 		frame = new JFrame("Administrator");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridLayout(5, 1));
-		
-		
-		String[] classNames = new String[classes.getClasses().size()];
-		for (int i = 0; i < classes.getClasses().size(); i++) {
-			classNames[i] = classes.getClasses().get(i).getName();
-		}
-		String[] teacherNames = new String[teachers.getListOfTeachers().size()];
-		for (int i = 0; i < teachers.getListOfTeachers().size(); i++) {
-			teacherNames[i] = teachers.getListOfTeachers().get(i).getName();
-		}
-		
-		JComboBox<String> classList = new JComboBox<>(classNames);
-		JComboBox<String> teacherList = new JComboBox<>(teacherNames);
-		
-		JLabel matchedList = new JLabel("Class - Teacher");
-		JButton assign = new JButton("Assign Teacher");
-		JButton train = new JButton("Send Teachers to Training");
-		
-		panel.add(teacherList);
-		panel.add(classList);
-		panel.add(assign);
-		panel.add(matchedList);
-		panel.add(train);
-		
-	
-		frame.add(panel);
 		frame.setSize(500,200);
 		frame.setVisible(true);
 		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		layoutComponents();
 		
 	}
+	
+	public void layoutComponents() {
+		JLabel title = new JLabel("Administrator");
+		
+		assign = new JButton("Assign Teacher");
+		assign.addActionListener(controller);
+		send = new JButton("Send List To PTT Director");
+		send.addActionListener(controller);
+		home = new JButton("Home");
+		home.addActionListener(controller);
+		
+		teacherList = new JComboBox<String>(controller.getTeacherNames());
+		teacherList.addActionListener(controller);
+		classList = new JComboBox<String>(controller.getClassNames());
+		classList.addActionListener(controller);
+		
+		mapDisplay = new JList();
+		resetMapDisplay();
+		
+		panel.add(title);
+		
+		panel.add(teacherList);
+		panel.add(classList);
+		
+		panel.add(assign);
+		panel.add(send);
+		panel.add(home);
+		
+		panel.add(mapDisplay);
+		
+	
+		frame.add(panel);
+	
+		
+	}
+	
+	public void updateMapDisplay() {
+		String[] pairs = new String[controller.getMap().size()];
+		Map<Class, Teacher> pairedMap = controller.getMap();
+		int counter = 0;
+		for (Map.Entry<Class, Teacher> entry : pairedMap.entrySet()) {
+			Class matchedClass = entry.getKey();
+			Teacher matchedTeacher = entry.getValue();
+			pairs[counter] = matchedClass.getName() + " - " + matchedTeacher.getName();
+			counter++;
+		}
+		
+		mapDisplay.setListData(pairs);
+		
+	}
+	
+	public void resetMapDisplay() {
+		String[] empty = new String[5];
+		for (int i = 0; i < 5; i++) {
+			empty[i] = "";
+		}
+		
+		mapDisplay.setListData(empty);
+		
+	}
+
 
 }
