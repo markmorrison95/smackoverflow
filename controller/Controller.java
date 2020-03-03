@@ -5,6 +5,7 @@ import model.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.Map;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,20 +14,25 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JTextField;
 
 public class Controller implements ActionListener {
-    private JButton signInButton, cdSignOutButton, cdAddClassButton;
+    private JButton signInButton, cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton;
     private JTextField homeIdTextField, cdIdTextField;
+    private JComboBox<String> adTeacherList, adClassList;
+    private JList<String> adMapDisplay;
+    private AssigningList assigningList;
     private JLabel cdUpdateLabel;
     private HomeWindow homeWindow;
     private ClassDirectorWindow cdWindow;
     private LoCourses lCourses;
     private LoTeachers lTeachers;
-    private Teacher teacherName;
     private Course assignedCourse;
     private LoTrainingCourses lTrainingCourses;
+    private AdminView adminView;
 
     public Controller() {
         /**
@@ -36,6 +42,7 @@ public class Controller implements ActionListener {
         lCourses = new LoCourses();
         lTeachers = new LoTeachers();
         lTrainingCourses = new LoTrainingCourses();
+        assigningList = new AssigningList();
         try {
             readFileIn("PermanentInfo.txt");
         } catch (FileNotFoundException e) {
@@ -95,7 +102,23 @@ public class Controller implements ActionListener {
     }
 
     public void admin() {
-        // add admin window code
+        adminView = new AdminView();
+        adAssignButton = adminView.getAssignButton();
+        adAssignButton.addActionListener(this);
+        adSendButton = adminView.getSendButton();
+        adSendButton.addActionListener(this);
+        adSignOutButton = adminView.getSignOutButton();
+        adSignOutButton.addActionListener(this);
+        adTeacherList = adminView.getTeacherList();
+        for (int i = 0; i < lTeachers.getListOfTeachers().size(); i++) {
+			adTeacherList.addItem(lTeachers.getListOfTeachers().get(i).toString());
+        }
+        adTeacherList.addActionListener(this);
+        adClassList = adminView.getClassList();
+        for (int i = 0; i < lCourses.getClasses().size(); i++) {
+			adClassList.addItem(lCourses.getClasses().get(i).toString());
+        }
+        adClassList.addActionListener(this);
     }
 
     public void pttDirector() {
@@ -125,8 +148,51 @@ public class Controller implements ActionListener {
         if (e.getSource() == cdSignOutButton) {
             signOutCD();
         }
-
+        if (e.getSource() == adAssignButton) {
+			updateMap((String) adClassList.getSelectedItem(),(String) adTeacherList.getSelectedItem());
+			updateMapDisplay();
+        }
+        if (e.getSource() == adSendButton) {
+			System.out.println("okay they're sent to training good job");
+        }
+        if (e.getSource() == adSignOutButton) {
+			System.out.println("sign em out");
+		}
     }
+    
+    public void updateMap(String classString, String teacherString) {
+		Course currentClass = null;
+		Teacher currentTeacher = null;
+		for (int i = 0; i < lCourses.getClasses().size(); i++) {
+			if (lCourses.getClasses().get(i).getName().equals(classString)) {
+				currentClass = lCourses.getClasses().get(i);
+				break;
+			}
+		}
+		
+		for (int i = 0; i < lTeachers.getListOfTeachers().size(); i++) {
+			if (lTeachers.getListOfTeachers().get(i).getName().equals(teacherString)) {
+				currentTeacher = lTeachers.getListOfTeachers().get(i);
+				break;
+			}
+		}
+
+		assigningList.getAssigningList().put(currentClass, currentTeacher);
+    }
+    public void updateMapDisplay() {
+        adMapDisplay = adminView.getMapDisplay();
+		String[] pairs = new String[assigningList.getAssigningList().size()];
+		int counter = 0;
+		for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+			Course matchedClass = entry.getKey();
+			Teacher matchedTeacher = entry.getValue();
+			pairs[counter] = matchedClass.getName() + " - " + matchedTeacher.getName();
+			counter++;
+		}
+		
+		adMapDisplay.setListData(pairs);
+		
+	}
 
 
     public void readFileIn(String fileName) throws FileNotFoundException {
