@@ -12,9 +12,8 @@ import java.awt.GridLayout;
 
 public class HomeWindow extends JFrame {
     JPanel main;
-    JButton signIn;
+    JButton courseDirector, admin, pttDirector;
     JLabel updateLabel;
-    JTextField idTextBox;
 
     public HomeWindow() {
         this.setTitle("Home");
@@ -24,21 +23,24 @@ public class HomeWindow extends JFrame {
         main.setBorder(new EmptyBorder(30, 30, 30, 30));
         main.setLayout(new GridLayout(3, 1));
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(2, 1));
+        top.setLayout(new GridLayout(1, 1));
         JPanel middle = new JPanel();
-        middle.setLayout(new GridLayout(1,1));
-        middle.setBorder(new EmptyBorder(0, 60, 0, 60));
+        middle.setLayout(new GridLayout(3,1));
         JPanel bottom = new JPanel();
         bottom.setLayout(new GridLayout(1,1));
-        signIn = new JButton("Sign In");
-        signIn.setFont(new Font("Arial", Font.PLAIN, 20));
-        middle.add(signIn);
+        courseDirector = new JButton("Course Director");
+        courseDirector.setFont(new Font("Arial", Font.PLAIN, 22));
+        courseDirector.setSize(50, 10);
+        admin = new JButton("Admin");
+        admin.setFont(new Font("Arial", Font.PLAIN, 22));
+        pttDirector = new JButton("Ptt Director");
+        pttDirector.setFont(new Font("Arial", Font.PLAIN, 22));
+        middle.add(courseDirector);
+        middle.add(admin);
+        middle.add(pttDirector);
         JLabel info = new JLabel("Sign in ID:");
         info.setFont(new Font("Arial", Font.PLAIN, 20));
-        idTextBox = new JTextField("Enter ID number here (eg. 232)", 30);
-        idTextBox.setFont(new Font("Arial", Font.PLAIN, 18));
         top.add(info);
-        top.add(idTextBox);
         updateLabel = new JLabel();
         updateLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         bottom.add(updateLabel);
@@ -47,14 +49,18 @@ public class HomeWindow extends JFrame {
         main.add(bottom);
         this.add(main);
         this.pack();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
-    public JButton getSignInButton(){
-        return signIn;
+    public JButton getCourseDirectorButton(){
+        return courseDirector;
     }
-    public JTextField getIdText(){
-        return idTextBox;
+    public JButton getAdminButton(){
+        return admin;
+    }
+    public JButton getPttDirectorButton(){
+        return pttDirector;
     }
     public JLabel getUpdateLabel(){
         return updateLabel;

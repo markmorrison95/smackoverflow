@@ -26,7 +26,6 @@ public class AdminView extends JFrame {
 	
 	public AdminView() {
 		this.setTitle("Administrator");
-		this.setSize(750, 250);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		panel = new JPanel();
@@ -78,8 +77,9 @@ public class AdminView extends JFrame {
 		
 		
 		this.add(panel);
-		this.setVisible(true);
+		this.setLocationRelativeTo(null);
 		this.pack();
+		this.setVisible(true);
 	
 		
 	}

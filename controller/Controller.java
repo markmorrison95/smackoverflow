@@ -21,15 +21,16 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 
 public class Controller implements ActionListener {
-    private JButton signInButton, cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton;
+    private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton,
+            homeAdminButton, homeCDButton, homePttButton;
     private JTextField homeIdTextField, cdIdTextField;
-    private JComboBox<String> adTeacherList, adClassList;
+    private JComboBox<String> adTeacherList, adClassList, cdClassList;
     private JList<String> adMapDisplay;
     private AssigningList assigningList;
     private JLabel cdUpdateLabel;
     private HomeWindow homeWindow;
     private ClassDirectorWindow cdWindow;
-    private LoCourses lCourses;
+    private LoCourses lCourses, lAllCourses;
     private LoTeachers lTeachers;
     private Course assignedCourse;
     private LoTrainingCourses lTrainingCourses;
@@ -42,6 +43,7 @@ public class Controller implements ActionListener {
          */
         lCourses = new LoCourses();
         lTeachers = new LoTeachers();
+        lAllCourses = new LoCourses();
         lTrainingCourses = new LoTrainingCourses();
         assigningList = new AssigningList();
         try {
@@ -52,9 +54,12 @@ public class Controller implements ActionListener {
         lTeachers.printTeacher();
         lTrainingCourses.printTcourses();
         homeWindow = new HomeWindow();
-        signInButton = homeWindow.getSignInButton();
-        signInButton.addActionListener(this);
-        homeIdTextField = homeWindow.getIdText();
+        homeCDButton = homeWindow.getCourseDirectorButton();
+        homeCDButton.addActionListener(this);
+        homeAdminButton = homeWindow.getAdminButton();
+        homeAdminButton.addActionListener(this);
+        homePttButton = homeWindow.getPttDirectorButton();
+        homePttButton.addActionListener(this);
     }
 
     public void signIn(String idNo) {
@@ -98,7 +103,10 @@ public class Controller implements ActionListener {
         cdAddClassButton.addActionListener(this);
         cdSignOutButton = cdWindow.getSignOutButton();
         cdSignOutButton.addActionListener(this);
-        cdIdTextField = cdWindow.getClassIDText();
+        cdClassList = cdWindow.getClassListBox();
+        for (int i = 0; i < lAllCourses.getClasses().size(); i++) {
+			cdClassList.addItem(lAllCourses.getClasses().get(i).getName());
+        }
         cdUpdateLabel = cdWindow.getUpdateLabel();
     }
 
@@ -112,15 +120,15 @@ public class Controller implements ActionListener {
         adSignOutButton.addActionListener(this);
         adTeacherList = adminWindow.getTeacherList();
         for (int i = 0; i < lTeachers.getListOfTeachers().size(); i++) {
-			adTeacherList.addItem(lTeachers.getListOfTeachers().get(i).toString());
+            adTeacherList.addItem(lTeachers.getListOfTeachers().get(i).toString());
         }
-	adTeacherList.setSelectedIndex(0);
+        adTeacherList.setSelectedIndex(0);
         adTeacherList.addActionListener(this);
         adClassList = adminWindow.getClassList();
         for (int i = 0; i < lCourses.getClasses().size(); i++) {
-			adClassList.addItem(lCourses.getClasses().get(i).toString());
+            adClassList.addItem(lCourses.getClasses().get(i).toString());
         }
-	adClassList.setSelectedIndex(0);
+        adClassList.setSelectedIndex(0);
         adClassList.addActionListener(this);
     }
 
@@ -142,62 +150,68 @@ public class Controller implements ActionListener {
         /**
          * handles all button actions and directs to the right method
          */
-        if (e.getSource() == signInButton) {
-            signIn(homeIdTextField.getText());
+        if (e.getSource() == homeCDButton) {
+            classDirector();
+        }
+        if (e.getSource() == homeAdminButton) {
+            admin();
+        }
+        if (e.getSource() == homePttButton) {
+            pttDirector();
         }
         if (e.getSource() == cdAddClassButton) {
-            addClass(cdIdTextField.getText());
+            addClass((String)cdClassList.getSelectedItem());
         }
         if (e.getSource() == cdSignOutButton) {
             signOut(cdWindow);
         }
         if (e.getSource() == adAssignButton) {
-			updateMap((String) adClassList.getSelectedItem(),(String) adTeacherList.getSelectedItem());
-			updateMapDisplay();
+            updateMap((String) adClassList.getSelectedItem(), (String) adTeacherList.getSelectedItem());
+            updateMapDisplay();
         }
         if (e.getSource() == adSendButton) {
-            //add method for sending to training course
-			System.out.println("okay they're sent to training good job");
+            // add method for sending to training course
+            System.out.println("okay they're sent to training good job");
         }
         if (e.getSource() == adSignOutButton) {
             signOut(adminWindow);
-		}
+        }
     }
-    
-    public void updateMap(String classString, String teacherString) {
-		Course currentClass = null;
-		Teacher currentTeacher = null;
-		for (int i = 0; i < lCourses.getClasses().size(); i++) {
-			if (lCourses.getClasses().get(i).getName().equals(classString)) {
-				currentClass = lCourses.getClasses().get(i);
-				break;
-			}
-		}
-		
-		for (int i = 0; i < lTeachers.getListOfTeachers().size(); i++) {
-			if (lTeachers.getListOfTeachers().get(i).getName().equals(teacherString)) {
-				currentTeacher = lTeachers.getListOfTeachers().get(i);
-				break;
-			}
-		}
 
-		assigningList.getAssigningList().put(currentClass, currentTeacher);
+    public void updateMap(String classString, String teacherString) {
+        Course currentClass = null;
+        Teacher currentTeacher = null;
+        for (int i = 0; i < lCourses.getClasses().size(); i++) {
+            if (lCourses.getClasses().get(i).getName().equals(classString)) {
+                currentClass = lCourses.getClasses().get(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < lTeachers.getListOfTeachers().size(); i++) {
+            if (lTeachers.getListOfTeachers().get(i).getName().equals(teacherString)) {
+                currentTeacher = lTeachers.getListOfTeachers().get(i);
+                break;
+            }
+        }
+
+        assigningList.getAssigningList().put(currentClass, currentTeacher);
     }
+
     public void updateMapDisplay() {
         adMapDisplay = adminWindow.getMapDisplay();
-		String[] pairs = new String[assigningList.getAssigningList().size()];
-		int counter = 0;
-		for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
-			Course matchedClass = entry.getKey();
-			Teacher matchedTeacher = entry.getValue();
-			pairs[counter] = matchedClass.getName() + " - " + matchedTeacher.getName();
-			counter++;
-		}
-		
-		adMapDisplay.setListData(pairs);
-		
-	}
+        String[] pairs = new String[assigningList.getAssigningList().size()];
+        int counter = 0;
+        for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+            Course matchedClass = entry.getKey();
+            Teacher matchedTeacher = entry.getValue();
+            pairs[counter] = matchedClass.getName() + " - " + matchedTeacher.getName();
+            counter++;
+        }
 
+        adMapDisplay.setListData(pairs);
+
+    }
 
     public void readFileIn(String fileName) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(fileName));
@@ -218,12 +232,14 @@ public class Controller implements ActionListener {
                 }
             }
             if (finishedTeachers) {
-                lTrainingCourses.addCourse(new TrainingCourse(scanner.next(), scanner.next()));
+                String tc = scanner.next();
+                String subject = scanner.next();
+                lTrainingCourses.addCourse(new TrainingCourse(tc, subject));
+                lAllCourses.addCourse(new Course(subject));
             }
         }
 
     }
-
 
     /* 
     * 
@@ -232,14 +248,14 @@ public class Controller implements ActionListener {
         File file = new File("TeachersClasses.txt");
         FileOutputStream fileOut = new FileOutputStream(file);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileOut));
-        for(Teacher teacher : lTeachers.getListOfTeachers()){
-            //assignedCourse = hasmap.get(teacher);
+        for (Teacher teacher : lTeachers.getListOfTeachers()) {
+            // assignedCourse = hasmap.get(teacher);
             bw.write(teacher + " " + assignedCourse);
             bw.newLine();
         }
         bw.write("TrainingCourse");
         bw.newLine();
-        for(TrainingCourse tc : lTrainingCourses.getListOfTC()){
+        for (TrainingCourse tc : lTrainingCourses.getListOfTC()) {
             bw.write(tc.getCourseName() + " " + tc.getSubjectName());
             bw.newLine();
         }
