@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import model.*;
-import controller.*;
 
 
 public class AdminView extends JFrame {
@@ -22,7 +21,6 @@ public class AdminView extends JFrame {
 	JButton assign, send, signOut;
 	JComboBox<String> teacherList, classList;
 	JList<String> mapDisplay;
-	AdminController controller;
 	LoTeachers teachers;
 	LoCourses classes;
 	
