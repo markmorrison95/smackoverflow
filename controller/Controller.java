@@ -114,11 +114,13 @@ public class Controller implements ActionListener {
         for (int i = 0; i < lTeachers.getListOfTeachers().size(); i++) {
 			adTeacherList.addItem(lTeachers.getListOfTeachers().get(i).toString());
         }
+	adTeacherList.setSelectedIndex(0);
         adTeacherList.addActionListener(this);
         adClassList = adminWindow.getClassList();
         for (int i = 0; i < lCourses.getClasses().size(); i++) {
 			adClassList.addItem(lCourses.getClasses().get(i).toString());
         }
+	adClassList.setSelectedIndex(0);
         adClassList.addActionListener(this);
     }
 
