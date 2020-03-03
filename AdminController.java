@@ -1,30 +1,27 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.LoClasses;
-import model.LoTeachers;
-import model.Teacher;
-import model.Class;
+import model.*;
+
 
 public class AdminController implements ActionListener {
 	private AdminView view;
 	private LoTeachers teachers;
-	private LoClasses classes;
-	private Map<Class, Teacher> pairedMap;
+	private LoCourses classes;
+	private Map<Course, Teacher> pairedMap;
 	private String teacherName;
 	private String className;
-	
-	public AdminController(LoTeachers teachers, LoClasses classes) {
+
+	public AdminController(LoTeachers teachers, LoCourses classes) {
 		this.teachers = teachers;
 		this.classes = classes;
 		this.view = new AdminView(this);
-		pairedMap = new HashMap<Class, Teacher>();
+		pairedMap = new HashMap<Course, Teacher>();
 
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == view.teacherList) {
@@ -39,25 +36,25 @@ public class AdminController implements ActionListener {
 		} else if (e.getSource() == view.signOut) {
 			System.out.println("sign em out");
 		}
-		
+
 	}
-	
+
 	public LoTeachers getTeachers() {
 		return this.teachers;
 	}
-	
-	public LoClasses getClasses() {
+
+	public LoCourses getClasses() {
 		return this.classes;
 	}
-	
+
 	// add teacher/class combo to hashmap
-	public void updateMap(Class newClass, Teacher newTeacher) {
+	public void updateMap(Course newClass, Teacher newTeacher) {
 		pairedMap.put(newClass, newTeacher);
-		
+
 	}
-	
+
 	public void updateMap(String classString, String teacherString) {
-		Class currentClass = null;
+		Course currentClass = null;
 		Teacher currentTeacher = null;
 		for (int i = 0; i < classes.getClasses().size(); i++) {
 			if (classes.getClasses().get(i).getName().equals(classString)) {
@@ -76,7 +73,7 @@ public class AdminController implements ActionListener {
 		pairedMap.put(currentClass, currentTeacher);
 	}
 	
-	public Map<Class, Teacher> getMap() {
+	public Map<Course, Teacher> getMap() {
 		return pairedMap;
 	}
 

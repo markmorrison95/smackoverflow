@@ -1,9 +1,5 @@
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,22 +7,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import model.LoClasses;
-import model.LoTeachers;
-import model.Teacher;
-import model.Class;
+import model.*;
 
 public class AdminView extends JFrame {
 	JFrame frame;
 	JPanel panel;
 	JButton assign, send, signOut;
 	JComboBox<String> teacherList, classList;
-	JList mapDisplay;
+	JList<String> mapDisplay;
 	AdminController controller;
 	LoTeachers teachers;
-	LoClasses classes;
+	LoCourses classes;
 	
 	
 	public AdminView(AdminController controller) {
@@ -70,7 +62,7 @@ public class AdminView extends JFrame {
 		
 		classList.addActionListener(controller);
 		
-		mapDisplay = new JList();
+		mapDisplay = new JList<String>();
 		resetMapDisplay();
 		
 		panel.add(title);
@@ -93,10 +85,10 @@ public class AdminView extends JFrame {
 	
 	public void updateMapDisplay() {
 		String[] pairs = new String[controller.getMap().size()];
-		Map<Class, Teacher> pairedMap = controller.getMap();
+		Map<Course, Teacher> pairedMap = controller.getMap();
 		int counter = 0;
-		for (Map.Entry<Class, Teacher> entry : pairedMap.entrySet()) {
-			Class matchedClass = entry.getKey();
+		for (Map.Entry<Course, Teacher> entry : pairedMap.entrySet()) {
+			Course matchedClass = entry.getKey();
 			Teacher matchedTeacher = entry.getValue();
 			pairs[counter] = matchedClass.getName() + " - " + matchedTeacher.getName();
 			counter++;
