@@ -1,15 +1,15 @@
 Teacher, Class Assigned to
-Mark    MATH
-Chris   ENGLISH
-Kate    MATH
-Meredith    FRENCH
-Gareth  CRYPTO
-Nathan  MATH
-Julia   MATH
-Hugh    MATH
-Rhys    MATH
+Mark    MATH1
+Chris   ENGLISH2
+Kate    MATH2
+Meredith    FRENCH2
+Gareth  
+Nathan  MATH4
+Julia   MATH4
+Hugh    
+Rhys    MATH5
 TrainingCourses
-MathsTraining   Maths
-EnglishTraining English
-FrenchTraining  French
-CryptoTraining  Crpto
+MathsTraining   MATH2
+EnglishTraining ENGLISH4
+FrenchTraining  FRENCH4
+CryptoTraining  CRYPTO1

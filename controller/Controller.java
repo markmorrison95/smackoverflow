@@ -132,16 +132,19 @@ public class Controller implements ActionListener {
     public void readFileIn(String fileName) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(fileName));
         boolean finishedTeachers = false;
+        String nextString;
         scanner.nextLine();
         while (scanner.hasNextLine()) {
             if (!finishedTeachers) {
-                String nextString = scanner.next();
+                nextString = scanner.next();
+                if (nextString.matches(".*\\d.*")) {
+                    nextString = scanner.next();
+                }
                 if (nextString.contains("TrainingCourses")) {
                     scanner.nextLine();
                     finishedTeachers = true;
                 } else {
                     lTeachers.addTeacher(new Teacher(nextString));
-                    scanner.next();
                 }
             }
             if (finishedTeachers) {
