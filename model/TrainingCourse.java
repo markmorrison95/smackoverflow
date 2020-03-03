@@ -18,6 +18,9 @@ public class TrainingCourse {
     public String getCourseName(){
         return courseName;
     }
+    public String getSubjectName(){
+        return subjectName;
+    }
 
     public ArrayList<Teacher> getListOfTeachers(){
         return listOfTeachers;

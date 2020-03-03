@@ -167,6 +167,12 @@ public class Controller implements ActionListener {
             bw.write(teacher + " " + assignedCourse);
             bw.newLine();
         }
+        bw.write("TrainingCourse");
+        bw.newLine();
+        for(TrainingCourse tc : lTrainingCourses.getListOfTC()){
+            bw.write(tc.getCourseName() + " " + tc.getSubjectName());
+            bw.newLine();
+        }
         bw.close();
     }
 }
