@@ -36,7 +36,6 @@ public class AdminController implements ActionListener {
 		} else if (e.getSource() == view.signOut) {
 			System.out.println("sign em out");
 		}
-
 	}
 
 	public LoTeachers getTeachers() {

@@ -19,7 +19,7 @@ public class HomeWindow extends JFrame {
     public HomeWindow() {
         this.setTitle("Home");
         main = new JPanel();
-        this.setDefaultCloseOperation(3);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setResizable(true);
         main.setBorder(new EmptyBorder(30, 30, 30, 30));
         main.setLayout(new GridLayout(3, 1));
