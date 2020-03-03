@@ -16,8 +16,7 @@ import model.*;
 
 
 public class AdminView extends JFrame {
-	JFrame frame;
-	JPanel panel;
+	JPanel panel, titlePanel, selectionPanel, buttonPanel, infoPanel, rightPanel;
 	JButton assign, send, signOut;
 	JComboBox<String> teacherList, classList;
 	JList<String> mapDisplay;
@@ -26,29 +25,58 @@ public class AdminView extends JFrame {
 	
 	
 	public AdminView() {
+		this.setTitle("Administrator");
+		this.setSize(750, 250);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		panel = new JPanel();
-		panel.setLayout(new GridLayout(5, 1));
+		panel.setLayout(new GridLayout(1, 2));
 		panel.setBorder(new EmptyBorder(30, 30, 30, 30));
+		
+		rightPanel = new JPanel();
+		rightPanel.setLayout(new GridLayout(3, 1));
+		
+		titlePanel = new JPanel();
+		selectionPanel = new JPanel();
+		buttonPanel = new JPanel();
+		infoPanel = new JPanel();
+
+		selectionPanel.setLayout(new GridLayout(1,2));
+		buttonPanel.setLayout(new GridLayout(3, 1));
+		
 		JLabel title = new JLabel("Administrator");	
-		title.setFont(new Font("Arial", Font.PLAIN, 20));	
+		title.setFont(new Font("Arial", Font.BOLD, 30));	
+		
 		assign = new JButton("Assign Teacher");
 		assign.setFont(new Font("Arial", Font.PLAIN, 18));
-		send = new JButton("Send List To PTT Director");
+		send = new JButton("Assign Teachers to Training Courses");
 		send.setFont(new Font("Arial", Font.PLAIN, 18));
-		signOut = new JButton("Home");
+		signOut = new JButton("Sign Out");
 		signOut.setFont(new Font("Arial", Font.PLAIN, 18));
+		
 		teacherList = new JComboBox<String>();
-		classList = new JComboBox<String>();		
+		classList = new JComboBox<String>();	
+		
 		mapDisplay = new JList<String>();
 		resetMapDisplay();
-		panel.add(title);
-		panel.add(teacherList);
-		panel.add(classList);
-		panel.add(assign);
-		panel.add(send);
-		panel.add(signOut);
-		panel.add(mapDisplay);
+		
+		titlePanel.add(title);
+		selectionPanel.add(teacherList);
+		selectionPanel.add(classList);
+		buttonPanel.add(assign);
+		buttonPanel.add(send);
+		buttonPanel.add(signOut);
+		
+		infoPanel.add(mapDisplay);
+		
+		rightPanel.add(titlePanel);
+		rightPanel.add(selectionPanel);
+		rightPanel.add(buttonPanel);
+		
+		panel.add(rightPanel);
+		panel.add(infoPanel);
+		
+		
 		this.add(panel);
 		this.setVisible(true);
 		this.pack();
