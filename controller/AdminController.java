@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.*;
-import view.*;
-import controller.*;
 
 
 public class AdminController implements ActionListener {
