@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import model.*;
 import controller.*;
@@ -26,18 +28,18 @@ public class AdminView extends JFrame {
 	
 	
 	public AdminView() {
-		frame = new JFrame("Administrator");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(5, 1));
-		layoutComponents();
-	}
-	
-	public void layoutComponents() {
-		JLabel title = new JLabel("Administrator");		
+		panel.setBorder(new EmptyBorder(30, 30, 30, 30));
+		JLabel title = new JLabel("Administrator");	
+		title.setFont(new Font("Arial", Font.PLAIN, 20));	
 		assign = new JButton("Assign Teacher");
+		assign.setFont(new Font("Arial", Font.PLAIN, 18));
 		send = new JButton("Send List To PTT Director");
+		send.setFont(new Font("Arial", Font.PLAIN, 18));
 		signOut = new JButton("Home");
+		signOut.setFont(new Font("Arial", Font.PLAIN, 18));
 		teacherList = new JComboBox<String>();
 		classList = new JComboBox<String>();		
 		mapDisplay = new JList<String>();
@@ -49,9 +51,9 @@ public class AdminView extends JFrame {
 		panel.add(send);
 		panel.add(signOut);
 		panel.add(mapDisplay);
-		frame.add(panel);
-		frame.setVisible(true);
-		frame.pack();
+		this.add(panel);
+		this.setVisible(true);
+		this.pack();
 	
 		
 	}

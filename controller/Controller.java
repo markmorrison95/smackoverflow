@@ -15,6 +15,7 @@ import java.io.OutputStreamWriter;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
@@ -32,7 +33,7 @@ public class Controller implements ActionListener {
     private LoTeachers lTeachers;
     private Course assignedCourse;
     private LoTrainingCourses lTrainingCourses;
-    private AdminView adminView;
+    private AdminView adminWindow;
 
     public Controller() {
         /**
@@ -76,14 +77,14 @@ public class Controller implements ActionListener {
         }
     }
 
-    public void signOutCD() {
+    public void signOut(JFrame window) {
         /**
          * for when the sign out button is pressed by the class director ensures there
          * is no invalid ID message on home window closes CD window and repopulates the
          * prompt in the text field on home
          */
         homeWindow.getUpdateLabel().setText("");
-        cdWindow.dispose();
+        window.dispose();
         homeIdTextField.setText("Enter ID number here (eg. 232)");
     }
 
@@ -102,19 +103,19 @@ public class Controller implements ActionListener {
     }
 
     public void admin() {
-        adminView = new AdminView();
-        adAssignButton = adminView.getAssignButton();
+        adminWindow = new AdminView();
+        adAssignButton = adminWindow.getAssignButton();
         adAssignButton.addActionListener(this);
-        adSendButton = adminView.getSendButton();
+        adSendButton = adminWindow.getSendButton();
         adSendButton.addActionListener(this);
-        adSignOutButton = adminView.getSignOutButton();
+        adSignOutButton = adminWindow.getSignOutButton();
         adSignOutButton.addActionListener(this);
-        adTeacherList = adminView.getTeacherList();
+        adTeacherList = adminWindow.getTeacherList();
         for (int i = 0; i < lTeachers.getListOfTeachers().size(); i++) {
 			adTeacherList.addItem(lTeachers.getListOfTeachers().get(i).toString());
         }
         adTeacherList.addActionListener(this);
-        adClassList = adminView.getClassList();
+        adClassList = adminWindow.getClassList();
         for (int i = 0; i < lCourses.getClasses().size(); i++) {
 			adClassList.addItem(lCourses.getClasses().get(i).toString());
         }
@@ -146,7 +147,7 @@ public class Controller implements ActionListener {
             addClass(cdIdTextField.getText());
         }
         if (e.getSource() == cdSignOutButton) {
-            signOutCD();
+            signOut(cdWindow);
         }
         if (e.getSource() == adAssignButton) {
 			updateMap((String) adClassList.getSelectedItem(),(String) adTeacherList.getSelectedItem());
@@ -156,6 +157,7 @@ public class Controller implements ActionListener {
 			System.out.println("okay they're sent to training good job");
         }
         if (e.getSource() == adSignOutButton) {
+            signOut(adminWindow);
 			System.out.println("sign em out");
 		}
     }
@@ -180,7 +182,7 @@ public class Controller implements ActionListener {
 		assigningList.getAssigningList().put(currentClass, currentTeacher);
     }
     public void updateMapDisplay() {
-        adMapDisplay = adminView.getMapDisplay();
+        adMapDisplay = adminWindow.getMapDisplay();
 		String[] pairs = new String[assigningList.getAssigningList().size()];
 		int counter = 0;
 		for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
