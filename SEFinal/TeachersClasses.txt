@@ -1,0 +1,5 @@
+Training Course
+MathsTraining MATH2
+EnglishTraining ENGLISH4
+FrenchTraining FRENCH4
+CryptoTraining CRYPTO1

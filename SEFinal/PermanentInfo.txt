@@ -1,0 +1,8 @@
+Training Course
+chris MATH2
+mark MATH4
+john
+TrainingCourses
+EnglishTraining ENGLISH4
+FrenchTraining FRENCH4
+CryptoTraining CRYPTO1
