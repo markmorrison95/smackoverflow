@@ -1,7 +1,7 @@
 package main;
 import controller.*;
 
-public class mainTest {
+public class mainClass {
 
     public static void main(String[] args) {
         new Controller();

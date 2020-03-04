@@ -20,5 +20,6 @@ CryptoTraining Crypto
 FencingTraining Fencing
 McDonaldsAprecationTraining McDonalds-Appreciation
 Teachers Assigned to Classes:
-WineTasting : Meredith ✔
-Pirating : Kate ✔
+McDonalds-Appreciation : Chris ✔
+English : Meredith ✔
+Wine-Tasting : Ron ✔
