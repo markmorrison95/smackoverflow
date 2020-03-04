@@ -23,7 +23,6 @@ import javax.swing.JTextField;
 public class Controller implements ActionListener {
     private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton,
             homeAdminButton, homeCDButton, homePttButton;
-    private JTextField homeIdTextField, cdIdTextField;
     private JComboBox<String> adTeacherList, adClassList, cdClassList;
     private JList<String> adMapDisplay;
     private AssigningList assigningList;
@@ -35,7 +34,6 @@ public class Controller implements ActionListener {
     private Course assignedCourse;
     private LoTrainingCourses lTrainingCourses;
     private AdminView adminWindow;
-    private TrainingCourse tCourse;
 
     public Controller() {
         /**
@@ -221,8 +219,13 @@ public class Controller implements ActionListener {
             teacher = entry.getValue();
             System.out.print(course.toString() + " " + teacher.toString());
             for (int i=0; i < lTrainingCourses.getListOfTC().size(); i++) {
-                // issue on below line?
-                if (course.getName().equals(tCourse.getSubjectName())) {
+                /**
+                 * wasn't initializing tCourse to equal the training course it had reached 
+                 * changed it so that gets set each loop and is just a method variable because only
+                 * being used here
+                 */
+                TrainingCourse tCourse = lTrainingCourses.getListOfTC().get(i);
+                if (course.getName().equals(tCourse.getSubjectName())){
                     tCourse.setTeacher(teacher);
                     System.out.println(tCourse.getTeacher().toString());
                 }
