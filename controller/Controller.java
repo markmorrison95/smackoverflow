@@ -12,18 +12,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JTextField;
 
 public class Controller implements ActionListener {
     private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton,
-            homeAdminButton, homeCDButton, homePttButton;
-    private JTextField homeIdTextField, cdIdTextField;
+            homeAdminButton, homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton;
     private JComboBox<String> adTeacherList, adClassList, cdClassList;
     private JList<String> adMapDisplay;
     private AssigningList assigningList;
@@ -101,17 +98,19 @@ public class Controller implements ActionListener {
             adTeacherList.addItem(lTeachers.getListOfTeachers().get(i).toString());
         }
         adTeacherList.setSelectedIndex(0);
-        adTeacherList.addActionListener(this);
         adClassList = adminWindow.getClassList();
         for (int i = 0; i < lCourses.getClasses().size(); i++) {
             adClassList.addItem(lCourses.getClasses().get(i).toString());
         }
         adClassList.setSelectedIndex(0);
-        adClassList.addActionListener(this);
     }
 
     public void pttDirector() {
-        // add pttDirector window code
+        PTTDirectorWindow pttWindow = new PTTDirectorWindow();
+        pttApproveButton = pttWindow.getApproveButton();
+        pttApproveButton.addActionListener(this);
+        pttDisapproveButton = pttWindow.getDisapproveButton();
+        pttDisapproveButton.addActionListener(this);
     }
 
     public void addClass(String courseName) {
@@ -152,6 +151,12 @@ public class Controller implements ActionListener {
 	}
         if (e.getSource() == adSignOutButton) {
             signOut(adminWindow);
+        }
+        if(e.getSource() == pttApproveButton){
+
+        }
+        if(e.getSource() == pttDisapproveButton){
+            
         }
     }
 
