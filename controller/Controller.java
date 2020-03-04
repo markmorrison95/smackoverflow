@@ -151,9 +151,8 @@ public class Controller implements ActionListener {
             updateMapDisplay();
         }
         if (e.getSource() == adSendButton) {
-            // add method for sending to training course
             assignTeacherTC();
-            System.out.println("okay they're sent to training good job");
+            adminWindow.getMessageCenter().setText("All teachers have been added to the appropriate training course.");
         }
         if (e.getSource() == adSignOutButton) {
             signOut(adminWindow);
