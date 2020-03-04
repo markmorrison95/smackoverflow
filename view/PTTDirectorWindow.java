@@ -1,9 +1,12 @@
 package view;// Chris Castaldo
+
 // 2495856C
 
 import model.AssigningList;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +24,10 @@ public class PTTDirectorWindow extends JFrame {
     AssigningList list;
 
     public PTTDirectorWindow() {
+        this.setTitle("PTT Director");
+        this.setResizable(true);
+        this.setSize(500, 330);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         list1 = new JList<>();
         TopString = new JLabel("All Teachers Are Being Trained For Assigned Courses");
         TopString2 = new JLabel("Please Approve or Disapprove");
@@ -43,29 +50,13 @@ public class PTTDirectorWindow extends JFrame {
         disapproveButton.setBounds(350, 180, 100, 35);
         signOut.setBounds(350, 220, 100, 35);
 
-        // signOut.addActionListener(new ActionListener() {
-
-        //         @Override
-        //         public void actionPerformed(ActionEvent arg0) {
-        //             dispose();
-
-        //         }
-
-        // });
-
         list.getAssigningList();
-        array = list.stringArray();
+        array = new String[]{"hey", "whats up", "ronnieBoy"};
         list1.setListData(array);
 
         list1.setBounds(15, 140, 300, 120);  // Positions the slots within the JFrame
-
-        this.setResizable(true);
-        this.setSize(500, 330);
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        this.add(panel);
-
         panel.add(TopString);
         panel.add(TopString2);
         panel.add(CoursesString);
@@ -73,7 +64,9 @@ public class PTTDirectorWindow extends JFrame {
         panel.add(approveButton);
         panel.add(disapproveButton);
         panel.add(list1);
-        this.pack();
+        this.add(panel);
+        this.setSize(500, 300);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
