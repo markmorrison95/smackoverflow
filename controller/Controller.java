@@ -62,35 +62,13 @@ public class Controller implements ActionListener {
         homePttButton.addActionListener(this);
     }
 
-    public void signIn(String idNo) {
-        /**
-         * takes the info in the text field when sign in pressed parses to int so can be
-         * used if begins in a certain value directs to the right method and therefore
-         * window if not valid id no, displays message
-         */
-        int idNumber = (Integer.parseInt(idNo)) / 100;
-        if (idNumber == 1) {
-            classDirector();
-        }
-        if (idNumber == 2) {
-            admin();
-        }
-        if (idNumber == 3) {
-            pttDirector();
-        } else {
-            homeWindow.getUpdateLabel().setText("Invalid ID Number! Enter Valid ID.");
-        }
-    }
-
     public void signOut(JFrame window) {
         /**
          * for when the sign out button is pressed by the class director ensures there
          * is no invalid ID message on home window closes CD window and repopulates the
          * prompt in the text field on home
          */
-        homeWindow.getUpdateLabel().setText("");
         window.dispose();
-        homeIdTextField.setText("Enter ID number here (eg. 232)");
     }
 
     public void classDirector() {
@@ -143,7 +121,6 @@ public class Controller implements ActionListener {
          */
         lCourses.addCourse(new Course(courseName));
         cdUpdateLabel.setText("Course: " + courseName + " Added!");
-        cdIdTextField.setText("Enter Class ID. (eg. MATH201)");
     }
 
     public void actionPerformed(ActionEvent e) {

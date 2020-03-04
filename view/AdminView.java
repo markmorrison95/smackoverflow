@@ -18,6 +18,7 @@ import model.*;
 public class AdminView extends JFrame {
 	JPanel panel, titlePanel, selectionPanel, buttonPanel, infoPanel, rightPanel;
 	JButton assign, send, signOut;
+	JLabel messageCenter;
 	JComboBox<String> teacherList, classList;
 	JList<String> mapDisplay;
 	LoTeachers teachers;
@@ -114,6 +115,9 @@ public class AdminView extends JFrame {
 	}
 	public JList<String> getMapDisplay(){
 		return mapDisplay;
+	}
+	public JLabel getMessageCenter(){
+		return messageCenter;
 	}
 	
 
