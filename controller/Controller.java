@@ -161,26 +161,20 @@ public class Controller implements ActionListener {
 
         if (e.getSource() == pttApproveButton) {
             int index = pttTeacherCourseList.getSelectedIndex();
-
-            String[] a = pttWindow.getArray();
-            a[index] = a[index] + " \u2714";
-
-            approvedList.getQualifiedTeacher().add(a[index]);
+            String[] teacherPairings = assigningList.stringArray();
+            teacherPairings[index] = teacherPairings[index] + " \u2714";
+            approvedList.getQualifiedTeacher().add(teacherPairings[index]);
             pttTeacherCourseList.setSelectedIndex(index);
             pttTeacherCourseList.setCellRenderer(new CellRenderer(cellRenderer));
+            System.out.println(teacherPairings[0]);
 
         }
 
         if (e.getSource() == pttDisapproveButton) {
 
             int index = pttTeacherCourseList.getSelectedIndex();
-            String[] a = pttWindow.getArray();
-            a[index] = a[index] + " \u2715";
-
-            approvedList.getQualifiedTeacher().add(a[index]);
             pttTeacherCourseList.setSelectedIndex(index);
             pttTeacherCourseList.setCellRenderer(new CellRenderer(cellRenderer));
-            System.out.println(a[0]);
 
         }
     }
