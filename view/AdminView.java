@@ -2,8 +2,6 @@ package view;
 
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -19,10 +17,10 @@ public class AdminView extends JFrame {
 	JPanel panel, titlePanel, selectionPanel, buttonPanel, infoPanel, rightPanel;
 	JButton assign, send, signOut;
 	JLabel messageCenter;
-	JComboBox<String> teacherList, classList;
+	JComboBox<String> teacherList, subjectList;
 	JList<String> mapDisplay;
 	LoTeachers teachers;
-	LoCourses classes;
+	LoSubjects subjects;
 	
 	
 	public AdminView() {
@@ -58,7 +56,7 @@ public class AdminView extends JFrame {
 		signOut.setFont(new Font("Arial", Font.PLAIN, 18));
 		
 		teacherList = new JComboBox<String>();
-		classList = new JComboBox<String>();	
+		subjectList = new JComboBox<String>();	
 		
 		mapDisplay = new JList<String>();
 		resetMapDisplay();
@@ -66,7 +64,7 @@ public class AdminView extends JFrame {
 		titlePanel.add(title);
 		titlePanel.add(messageCenter);
 		selectionPanel.add(teacherList);
-		selectionPanel.add(classList);
+		selectionPanel.add(subjectList);
 		buttonPanel.add(assign);
 		buttonPanel.add(send);
 		buttonPanel.add(signOut);
@@ -111,7 +109,7 @@ public class AdminView extends JFrame {
 		return teacherList;
 	}
 	public JComboBox<String> getClassList(){
-		return classList;
+		return subjectList;
 	}
 	public JList<String> getMapDisplay(){
 		return mapDisplay;

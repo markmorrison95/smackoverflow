@@ -20,18 +20,18 @@ import javax.swing.JList;
 
 public class Controller implements ActionListener {
     private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton, homeAdminButton,
-            homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton;
+            homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton, pttSignOutButton;
     private JComboBox<String> adTeacherList, adClassList, cdClassList;
     private JList<String> adMapDisplay, pttTeacherCourseList;
     private AssigningList assigningList;
+    private String[] approvalList;
     private JLabel cdUpdateLabel;
     private HomeWindow homeWindow;
     private ClassDirectorWindow cdWindow;
     PTTDirectorWindow pttWindow;
-    private LoCourses lCourses, lAllCourses;
+    private LoSubjects lSubjects, lAllSubjects;
     private LoTeachers lTeachers;
-    private Course assignedCourse;
-    private PTTDirector ronnieBoy;
+    private ApprovedList approvedList;
     private LoTrainingCourses lTrainingCourses;
     private AdminView adminWindow;
     private CellRenderer CellRenderer;
@@ -41,10 +41,10 @@ public class Controller implements ActionListener {
          * creates list of courses instance opens home window and adds event to the sign
          * in button
          */
-        ronnieBoy = new PTTDirector();
-        lCourses = new LoCourses();
+        approvedList = new ApprovedList();
+        lSubjects = new LoSubjects();
         lTeachers = new LoTeachers();
-        lAllCourses = new LoCourses();
+        lAllSubjects = new LoSubjects();
         lTrainingCourses = new LoTrainingCourses();
         assigningList = new AssigningList();
         try {
@@ -52,8 +52,6 @@ public class Controller implements ActionListener {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        lTeachers.printTeacher();
-        lTrainingCourses.printTcourses();
         homeWindow = new HomeWindow();
         homeCDButton = homeWindow.getCourseDirectorButton();
         homeCDButton.addActionListener(this);
@@ -83,8 +81,8 @@ public class Controller implements ActionListener {
         cdSignOutButton = cdWindow.getSignOutButton();
         cdSignOutButton.addActionListener(this);
         cdClassList = cdWindow.getClassListBox();
-        for (int i = 0; i < lAllCourses.getClasses().size(); i++) {
-            cdClassList.addItem(lAllCourses.getClasses().get(i).getName());
+        for (int i = 0; i < lAllSubjects.getSubjects().size(); i++) {
+            cdClassList.addItem(lAllSubjects.getSubjects().get(i).getName());
         }
         cdUpdateLabel = cdWindow.getUpdateLabel();
     }
@@ -107,8 +105,8 @@ public class Controller implements ActionListener {
         }
         adTeacherList.setSelectedIndex(0);
         adClassList = adminWindow.getClassList();
-        for (int i = 0; i < lCourses.getClasses().size(); i++) {
-            adClassList.addItem(lCourses.getClasses().get(i).toString());
+        for (int i = 0; i < lSubjects.getSubjects().size(); i++) {
+            adClassList.addItem(lSubjects.getSubjects().get(i).toString());
         }
         adClassList.setSelectedIndex(0);
     }
@@ -118,13 +116,17 @@ public class Controller implements ActionListener {
          * opens the ptt director window and adds actions to the buttons initiates local
          * accessibility for certain variables
          */
-        pttWindow = new PTTDirectorWindow(assigningList);
+        pttWindow = new PTTDirectorWindow();
         pttTeacherCourseList = pttWindow.getList();
+        approvalList = assigningList.stringArray();
+        pttTeacherCourseList.setListData(approvalList);
         pttApproveButton = pttWindow.getApproveButton();
         pttApproveButton.addActionListener(this);
         pttDisapproveButton = pttWindow.getDisapproveButton();
         pttDisapproveButton.addActionListener(this);
-        
+        pttSignOutButton = pttWindow.getSignOut();
+        pttSignOutButton.addActionListener(this);
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -160,27 +162,26 @@ public class Controller implements ActionListener {
 
         if (e.getSource() == pttApproveButton) {
             int index = pttTeacherCourseList.getSelectedIndex();
-
-            String[] a = pttWindow.getArray();
-            a[index] = a[index] + " \u2714";
-
-            ronnieBoy.getQualifiedTeacher().add(a[index]);
+            approvalList[index] = approvalList[index] + " \u2714";
+            approvedList.getQualifiedTeacher().add(approvalList[index]);
             pttTeacherCourseList.setSelectedIndex(index);
             pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
-
         }
 
         if (e.getSource() == pttDisapproveButton) {
 
             int index = pttTeacherCourseList.getSelectedIndex();
-            String[] a = pttWindow.getArray();
-            a[index] = a[index] + " \u2715";
-
-            ronnieBoy.getQualifiedTeacher().add(a[index]);
+            approvalList[index] = approvalList[index] + " \u2715";
             pttTeacherCourseList.setSelectedIndex(index);
             pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
-            System.out.println(a[0]);
-
+        }
+        if (e.getSource() == pttSignOutButton) {
+            signOut(pttWindow);
+            try {
+                writeToFile();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -189,38 +190,31 @@ public class Controller implements ActionListener {
          * creates a course based on the name passed then adds this to the list of
          * courses repopulates the textField with class id prompt
          */
-        lCourses.addCourse(new Course(courseName));
+        lSubjects.addSubject(new Subject(courseName));
         cdUpdateLabel.setText("Course: " + courseName + " Added!");
     }
 
     public void assignTeacherTC() {
-        Course course = null;
+        Subject course = null;
         Teacher teacher = null;
-        for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+        for (Map.Entry<Subject, Teacher> entry : assigningList.getAssigningList().entrySet()) {
             course = entry.getKey();
             teacher = entry.getValue();
-            System.out.print(course.toString() + " " + teacher.toString());
             for (int i = 0; i < lTrainingCourses.getListOfTC().size(); i++) {
-                /**
-                 * wasn't initializing tCourse to equal the training course it had reached in
-                 * the list changed it so that gets set each loop and is just a method variable
-                 * because only being used here
-                 */
                 TrainingCourse tCourse = lTrainingCourses.getListOfTC().get(i);
                 if (course.getName().equals(tCourse.getSubjectName())) {
                     tCourse.setTeacher(teacher);
-                    System.out.println(tCourse.getTeacher().toString());
                 }
             }
         }
     }
 
     public void updateMap(String classString, String teacherString) {
-        Course currentClass = null;
+        Subject currentClass = null;
         Teacher currentTeacher = null;
-        for (int i = 0; i < lCourses.getClasses().size(); i++) {
-            if (lCourses.getClasses().get(i).getName().equals(classString)) {
-                currentClass = lCourses.getClasses().get(i);
+        for (int i = 0; i < lSubjects.getSubjects().size(); i++) {
+            if (lSubjects.getSubjects().get(i).getName().equals(classString)) {
+                currentClass = lSubjects.getSubjects().get(i);
                 break;
             }
         }
@@ -239,8 +233,8 @@ public class Controller implements ActionListener {
         adMapDisplay = adminWindow.getMapDisplay();
         String[] pairs = new String[assigningList.getAssigningList().size()];
         int counter = 0;
-        for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
-            Course matchedClass = entry.getKey();
+        for (Map.Entry<Subject, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+            Subject matchedClass = entry.getKey();
             Teacher matchedTeacher = entry.getValue();
             pairs[counter] = matchedClass.getName() + " - " + matchedTeacher.getName();
             counter++;
@@ -258,9 +252,6 @@ public class Controller implements ActionListener {
         while (scanner.hasNextLine()) {
             if (!finishedTeachers) {
                 nextString = scanner.next();
-                if (nextString.matches(".*\\d.*")) {
-                    nextString = scanner.next();
-                }
                 if (nextString.contains("TrainingCourses")) {
                     scanner.nextLine();
                     finishedTeachers = true;
@@ -271,8 +262,11 @@ public class Controller implements ActionListener {
             if (finishedTeachers) {
                 String tc = scanner.next();
                 String subject = scanner.next();
+                if (tc.equals("Teachers")) {
+                    break;
+                }
                 lTrainingCourses.addCourse(new TrainingCourse(tc, subject));
-                lAllCourses.addCourse(new Course(subject));
+                lAllSubjects.addSubject(new Subject(subject));
             }
         }
 
@@ -282,20 +276,29 @@ public class Controller implements ActionListener {
     * 
     */
     public void writeToFile() throws IOException {
-        File file = new File("TeachersClasses.txt");
+
+        File file = new File("PermanentInfo.txt");
         FileOutputStream fileOut = new FileOutputStream(file);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileOut));
+        bw.write("Teachers:");
+        bw.newLine();
         for (Teacher teacher : lTeachers.getListOfTeachers()) {
-            // assignedCourse = hasmap.get(teacher);
-            bw.write(teacher + " " + assignedCourse);
+            bw.write(teacher.getName());
             bw.newLine();
         }
-        bw.write("TrainingCourse");
+        bw.write("TrainingCourses, Subject");
         bw.newLine();
         for (TrainingCourse tc : lTrainingCourses.getListOfTC()) {
             bw.write(tc.getCourseName() + " " + tc.getSubjectName());
             bw.newLine();
         }
+        bw.write("Teachers Assigned to Classes:");
+        bw.newLine();
+        for (String s : approvedList.getQualifiedTeacher()) {
+            bw.write(s);
+            bw.newLine();
+        }
+
         bw.close();
     }
 }

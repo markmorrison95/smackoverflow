@@ -2,11 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
-public class PTTDirector {
+public class ApprovedList {
     
     private ArrayList<String> qualifiedTeacher;
 
-    public PTTDirector() {
+    public ApprovedList() {
         qualifiedTeacher = new ArrayList<>();
     }
     public ArrayList<String> getQualifiedTeacher() {

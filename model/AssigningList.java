@@ -4,24 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssigningList {
-    private Map<Course, Teacher> pairedMap;
+    private Map<Subject, Teacher> pairedMap;
     public AssigningList(){
-        pairedMap = new HashMap<Course, Teacher>();
+        pairedMap = new HashMap<Subject, Teacher>();
     }
 
-    public void addPair(Course course, Teacher teacher){
-        pairedMap.put(course, teacher);
+    public void addPair(Subject subject, Teacher teacher){
+        pairedMap.put(subject, teacher);
     }
-    public Map<Course, Teacher> getAssigningList(){
+    public Map<Subject, Teacher> getAssigningList(){
         return pairedMap;
     }
     public String[] stringArray() {
         String[] array = new String[pairedMap.size()];
-        String s = null;
+        String str = null;
         int counter = 0;
-        for (Map.Entry<Course, Teacher> entry : pairedMap.entrySet()) {
-            s = String.format(entry.getKey().toString() + " : " + entry.getValue().toString());
-            array[counter] = s;
+        for (Map.Entry<Subject, Teacher> entry : pairedMap.entrySet()) {
+            str = String.format(entry.getKey().toString() + " : " + entry.getValue().toString());
+            array[counter] = str;
             counter++;
 
         }

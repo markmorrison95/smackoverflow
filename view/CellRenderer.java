@@ -1,9 +1,4 @@
 package view;
-
-import model.AssigningList;
-import model.PTTDirector;
-import model.Teacher;
-
 import javax.swing.*;
 import java.awt.*;
 
