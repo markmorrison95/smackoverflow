@@ -8,7 +8,6 @@ public class Teacher extends Person{
      * means all admins can have an id starting with 5
      */
     private static int nextIDNumber = 500;
-    private String name;
     private ArrayList<TrainingCourse> coursesTrainedFor;
     private int iDNumber;
 

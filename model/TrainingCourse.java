@@ -6,12 +6,13 @@ public class TrainingCourse {
     
     private String courseName;
     private String subjectName;
+    private Teacher teacherName;
     private ArrayList<Teacher> listOfTeachers;
 
     // constructor
-    public TrainingCourse(String name, String subjectName){
+    public TrainingCourse(String name, String subject){
         this.courseName = name;
-        this.subjectName = subjectName;
+        this.subjectName = subject;
         listOfTeachers = new ArrayList<Teacher>();
     }
 
@@ -22,6 +23,14 @@ public class TrainingCourse {
         return subjectName;
     }
 
+    public void setTeacher(Teacher teacher){
+        this.teacherName = teacher;
+    }
+
+    public Teacher getTeacher(){
+        return this.teacherName;
+    }
+
     public ArrayList<Teacher> getListOfTeachers(){
         return listOfTeachers;
     }
@@ -29,6 +38,6 @@ public class TrainingCourse {
         listOfTeachers.add(teacher);
     }
     public String toString(){
-        return "" + courseName + " " + subjectName;
+        return courseName + " " + subjectName;
     }
 }

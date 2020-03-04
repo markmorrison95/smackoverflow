@@ -35,6 +35,7 @@ public class Controller implements ActionListener {
     private Course assignedCourse;
     private LoTrainingCourses lTrainingCourses;
     private AdminView adminWindow;
+    private TrainingCourse tCourse;
 
     public Controller() {
         /**
@@ -90,7 +91,6 @@ public class Controller implements ActionListener {
          */
         homeWindow.getUpdateLabel().setText("");
         window.dispose();
-        homeIdTextField.setText("Enter ID number here (eg. 232)");
     }
 
     public void classDirector() {
@@ -143,7 +143,6 @@ public class Controller implements ActionListener {
          */
         lCourses.addCourse(new Course(courseName));
         cdUpdateLabel.setText("Course: " + courseName + " Added!");
-        cdIdTextField.setText("Enter Class ID. (eg. MATH201)");
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -171,6 +170,7 @@ public class Controller implements ActionListener {
         }
         if (e.getSource() == adSendButton) {
             // add method for sending to training course
+            assignTeacherTC();
             System.out.println("okay they're sent to training good job");
         }
         if (e.getSource() == adSignOutButton) {
@@ -211,6 +211,23 @@ public class Controller implements ActionListener {
 
         adMapDisplay.setListData(pairs);
 
+    }
+
+    public void assignTeacherTC(){
+        Course course = null;
+        Teacher teacher = null;
+        for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+            course = entry.getKey();
+            teacher = entry.getValue();
+            System.out.print(course.toString() + " " + teacher.toString());
+            for (int i=0; i < lTrainingCourses.getListOfTC().size(); i++) {
+                // issue on below line?
+                if (course.getName().equals(tCourse.getSubjectName())) {
+                    tCourse.setTeacher(teacher);
+                    System.out.println(tCourse.getTeacher().toString());
+                }
+            }
+        }
     }
 
     public void readFileIn(String fileName) throws FileNotFoundException {
