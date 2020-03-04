@@ -147,8 +147,9 @@ public class Controller implements ActionListener {
         }
         if (e.getSource() == adSendButton) {
             // add method for sending to training course
-            adminWindow.getMessageCenter().setText("All teachers have been added to the appropriate training course");    
-	}
+            assignTeacherTC();
+            System.out.println("okay they're sent to training good job");
+        }
         if (e.getSource() == adSignOutButton) {
             signOut(adminWindow);
         }
@@ -159,6 +160,32 @@ public class Controller implements ActionListener {
             
         }
     }
+
+    public void assignTeacherTC(){
+        Course course = null;
+        Teacher teacher = null;
+        for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+            course = entry.getKey();
+            teacher = entry.getValue();
+            System.out.print(course.toString() + " " + teacher.toString());
+            for (int i=0; i < lTrainingCourses.getListOfTC().size(); i++) {
+                /**
+                 * wasn't initializing tCourse to equal the training course it had reached in the list
+                 * changed it so that gets set each loop and is just a method variable because only
+                 * being used here
+                 */
+                TrainingCourse tCourse = lTrainingCourses.getListOfTC().get(i);
+                if (course.getName().equals(tCourse.getSubjectName())){
+                    tCourse.setTeacher(teacher);
+                    System.out.println(tCourse.getTeacher().toString());
+                }
+            }
+        }
+    }
+
+
+
+
 
     public void updateMap(String classString, String teacherString) {
         Course currentClass = null;
