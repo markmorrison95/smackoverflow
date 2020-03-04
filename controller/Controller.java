@@ -24,6 +24,7 @@ public class Controller implements ActionListener {
     private JComboBox<String> adTeacherList, adClassList, cdClassList;
     private JList<String> adMapDisplay, pttTeacherCourseList;
     private AssigningList assigningList;
+    private String[] approvalList;
     private JLabel cdUpdateLabel;
     private HomeWindow homeWindow;
     private ClassDirectorWindow cdWindow;
@@ -34,7 +35,7 @@ public class Controller implements ActionListener {
     private ApprovedList approvedList;
     private LoTrainingCourses lTrainingCourses;
     private AdminView adminWindow;
-    private CellRenderer cellRenderer;
+    private CellRenderer CellRenderer;
 
     public Controller() {
         /**
@@ -120,7 +121,8 @@ public class Controller implements ActionListener {
          */
         pttWindow = new PTTDirectorWindow();
         pttTeacherCourseList = pttWindow.getList();
-        pttTeacherCourseList.setListData(assigningList.stringArray());
+        approvalList = assigningList.stringArray();
+        pttTeacherCourseList.setListData(approvalList);
         pttApproveButton = pttWindow.getApproveButton();
         pttApproveButton.addActionListener(this);
         pttDisapproveButton = pttWindow.getDisapproveButton();
@@ -161,12 +163,11 @@ public class Controller implements ActionListener {
 
         if (e.getSource() == pttApproveButton) {
             int index = pttTeacherCourseList.getSelectedIndex();
-            String[] teacherPairings = assigningList.stringArray();
-            teacherPairings[index] = teacherPairings[index] + " \u2714";
-            approvedList.getQualifiedTeacher().add(teacherPairings[index]);
+            approvalList[index] = approvalList[index] + " \u2714";
+            approvedList.getQualifiedTeacher().add(approvalList[index]);
             pttTeacherCourseList.setSelectedIndex(index);
-            pttTeacherCourseList.setCellRenderer(new CellRenderer(cellRenderer));
-            System.out.println(teacherPairings[0]);
+            pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
+            System.out.println(approvalList[0]);
 
         }
 
@@ -174,7 +175,7 @@ public class Controller implements ActionListener {
 
             int index = pttTeacherCourseList.getSelectedIndex();
             pttTeacherCourseList.setSelectedIndex(index);
-            pttTeacherCourseList.setCellRenderer(new CellRenderer(cellRenderer));
+            pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
 
         }
     }

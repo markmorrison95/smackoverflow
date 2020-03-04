@@ -2,8 +2,6 @@ package view;// Chris Castaldo
 
 // 2495856C
 
-import model.AssigningList;
-
 import javax.swing.*;
 
 import java.awt.*;

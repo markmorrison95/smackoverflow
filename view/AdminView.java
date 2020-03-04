@@ -2,8 +2,6 @@ package view;
 
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
