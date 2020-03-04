@@ -22,22 +22,26 @@ public class Controller implements ActionListener {
     private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton, homeAdminButton,
             homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton;
     private JComboBox<String> adTeacherList, adClassList, cdClassList;
-    private JList<String> adMapDisplay;
+    private JList<String> adMapDisplay, pttTeacherCourseList;
     private AssigningList assigningList;
     private JLabel cdUpdateLabel;
     private HomeWindow homeWindow;
     private ClassDirectorWindow cdWindow;
+    PTTDirectorWindow pttWindow;
     private LoCourses lCourses, lAllCourses;
     private LoTeachers lTeachers;
     private Course assignedCourse;
+    private PTTDirector ronnieBoy;
     private LoTrainingCourses lTrainingCourses;
     private AdminView adminWindow;
+    private CellRenderer CellRenderer;
 
     public Controller() {
         /**
          * creates list of courses instance opens home window and adds event to the sign
          * in button
          */
+        ronnieBoy = new PTTDirector();
         lCourses = new LoCourses();
         lTeachers = new LoTeachers();
         lAllCourses = new LoCourses();
@@ -114,11 +118,13 @@ public class Controller implements ActionListener {
          * opens the ptt director window and adds actions to the buttons initiates local
          * accessibility for certain variables
          */
-        PTTDirectorWindow pttWindow = new PTTDirectorWindow();
+        pttWindow = new PTTDirectorWindow(assigningList);
+        pttTeacherCourseList = pttWindow.getList();
         pttApproveButton = pttWindow.getApproveButton();
         pttApproveButton.addActionListener(this);
         pttDisapproveButton = pttWindow.getDisapproveButton();
         pttDisapproveButton.addActionListener(this);
+        
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -152,10 +158,29 @@ public class Controller implements ActionListener {
         if (e.getSource() == adSignOutButton) {
             signOut(adminWindow);
         }
+
         if (e.getSource() == pttApproveButton) {
+            int index = pttTeacherCourseList.getSelectedIndex();
+
+            String[] a = pttWindow.getArray();
+            a[index] = a[index] + " \u2714";
+
+            ronnieBoy.getQualifiedTeacher().add(a[index]);
+            pttTeacherCourseList.setSelectedIndex(index);
+            pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
 
         }
+
         if (e.getSource() == pttDisapproveButton) {
+
+            int index = pttTeacherCourseList.getSelectedIndex();
+            String[] a = pttWindow.getArray();
+            a[index] = a[index] + " \u2715";
+
+            ronnieBoy.getQualifiedTeacher().add(a[index]);
+            pttTeacherCourseList.setSelectedIndex(index);
+            pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
+            System.out.println(a[0]);
 
         }
     }

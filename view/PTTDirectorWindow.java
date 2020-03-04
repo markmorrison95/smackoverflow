@@ -5,11 +5,8 @@ package view;// Chris Castaldo
 import model.AssigningList;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PTTDirectorWindow extends JFrame {
 
@@ -23,11 +20,12 @@ public class PTTDirectorWindow extends JFrame {
     private String[] array;
     AssigningList list;
 
-    public PTTDirectorWindow() {
+    public PTTDirectorWindow(AssigningList list) {
         this.setTitle("PTT Director");
         this.setResizable(true);
         this.setSize(500, 330);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.list = list;
         list1 = new JList<>();
         TopString = new JLabel("All Teachers Are Being Trained For Assigned Courses");
         TopString2 = new JLabel("Please Approve or Disapprove");
@@ -35,7 +33,6 @@ public class PTTDirectorWindow extends JFrame {
         approveButton = new JButton("Approve");
         disapproveButton = new JButton("Disapprove");
         signOut = new JButton("Sign Out");
-        list = new AssigningList();
         TopString.setBounds(15, 20, 1000, 35);
         TopString.setFont(new Font("Arial", Font.PLAIN, 14));
 
@@ -51,7 +48,7 @@ public class PTTDirectorWindow extends JFrame {
         signOut.setBounds(350, 220, 100, 35);
 
         list.getAssigningList();
-        array = new String[]{"hey", "whats up", "ronnieBoy"};
+        array = list.stringArray();
         list1.setListData(array);
 
         list1.setBounds(15, 140, 300, 120);  // Positions the slots within the JFrame
@@ -82,5 +79,8 @@ public class PTTDirectorWindow extends JFrame {
 
     public String[] getArray() {
         return array;
+    }
+    public void setList(AssigningList as){
+        this.list = as;
     }
 }
