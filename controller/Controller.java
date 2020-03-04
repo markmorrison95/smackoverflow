@@ -220,7 +220,7 @@ public class Controller implements ActionListener {
             System.out.print(course.toString() + " " + teacher.toString());
             for (int i=0; i < lTrainingCourses.getListOfTC().size(); i++) {
                 /**
-                 * wasn't initializing tCourse to equal the training course it had reached 
+                 * wasn't initializing tCourse to equal the training course it had reached in the list
                  * changed it so that gets set each loop and is just a method variable because only
                  * being used here
                  */
