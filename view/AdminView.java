@@ -44,11 +44,14 @@ public class AdminView extends JFrame {
 		buttonPanel.setLayout(new GridLayout(3, 1));
 		
 		JLabel title = new JLabel("Administrator");	
-		title.setFont(new Font("Arial", Font.BOLD, 30));	
+		title.setFont(new Font("Arial", Font.BOLD, 30));
 		
-		assign = new JButton("Assign Teacher");
+		messageCenter = new JLabel("");
+		messageCenter.setFont(new Font("Arial", Font.PLAIN, 11));
+		
+		assign = new JButton("Match Teacher to Class");
 		assign.setFont(new Font("Arial", Font.PLAIN, 18));
-		send = new JButton("Assign Teachers to Training Courses");
+		send = new JButton("Assign Selected Teachers to Training Courses");
 		send.setFont(new Font("Arial", Font.PLAIN, 18));
 		signOut = new JButton("Sign Out");
 		signOut.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -60,6 +63,7 @@ public class AdminView extends JFrame {
 		resetMapDisplay();
 		
 		titlePanel.add(title);
+		titlePanel.add(messageCenter);
 		selectionPanel.add(teacherList);
 		selectionPanel.add(classList);
 		buttonPanel.add(assign);
