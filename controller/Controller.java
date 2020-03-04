@@ -20,7 +20,7 @@ import javax.swing.JList;
 
 public class Controller implements ActionListener {
     private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton, homeAdminButton,
-            homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton;
+            homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton, pttSignOutButton;
     private JComboBox<String> adTeacherList, adClassList, cdClassList;
     private JList<String> adMapDisplay, pttTeacherCourseList;
     private AssigningList assigningList;
@@ -127,6 +127,8 @@ public class Controller implements ActionListener {
         pttApproveButton.addActionListener(this);
         pttDisapproveButton = pttWindow.getDisapproveButton();
         pttDisapproveButton.addActionListener(this);
+        pttSignOutButton = pttWindow.getSignOut();
+        pttSignOutButton.addActionListener(this);
         
     }
 
@@ -174,9 +176,12 @@ public class Controller implements ActionListener {
         if (e.getSource() == pttDisapproveButton) {
 
             int index = pttTeacherCourseList.getSelectedIndex();
+            approvalList[index] = approvalList[index] + " \u2715";
             pttTeacherCourseList.setSelectedIndex(index);
             pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
-
+        }
+        if(e.getSource() == pttSignOutButton){
+            signOut(pttWindow);
         }
     }
 
@@ -197,11 +202,6 @@ public class Controller implements ActionListener {
             teacher = entry.getValue();
             System.out.print(course.toString() + " " + teacher.toString());
             for (int i = 0; i < lTrainingCourses.getListOfTC().size(); i++) {
-                /**
-                 * wasn't initializing tCourse to equal the training course it had reached in
-                 * the list changed it so that gets set each loop and is just a method variable
-                 * because only being used here
-                 */
                 TrainingCourse tCourse = lTrainingCourses.getListOfTC().get(i);
                 if (course.getName().equals(tCourse.getSubjectName())) {
                     tCourse.setTeacher(teacher);
@@ -281,12 +281,13 @@ public class Controller implements ActionListener {
         File file = new File("TeachersClasses.txt");
         FileOutputStream fileOut = new FileOutputStream(file);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileOut));
+        bw.write("Teacher, Class Assigned to:");
         for (Teacher teacher : lTeachers.getListOfTeachers()) {
             // assignedCourse = hasmap.get(teacher);
             bw.write(teacher + " " + assignedCourse);
             bw.newLine();
         }
-        bw.write("TrainingCourse");
+        bw.write("TrainingCourses, Subject");
         bw.newLine();
         for (TrainingCourse tc : lTrainingCourses.getListOfTC()) {
             bw.write(tc.getCourseName() + " " + tc.getSubjectName());
