@@ -28,23 +28,23 @@ public class Controller implements ActionListener {
     private HomeWindow homeWindow;
     private ClassDirectorWindow cdWindow;
     PTTDirectorWindow pttWindow;
-    private LoCourses lCourses, lAllCourses;
+    private LoSubjects lSubjects, lAllSubjects;
     private LoTeachers lTeachers;
-    private Course assignedCourse;
-    private PTTDirector ronnieBoy;
+    private Subject assignedCourse;
+    private ApprovedList approvedList;
     private LoTrainingCourses lTrainingCourses;
     private AdminView adminWindow;
-    private CellRenderer CellRenderer;
+    private CellRenderer cellRenderer;
 
     public Controller() {
         /**
          * creates list of courses instance opens home window and adds event to the sign
          * in button
          */
-        ronnieBoy = new PTTDirector();
-        lCourses = new LoCourses();
+        approvedList = new ApprovedList();
+        lSubjects = new LoSubjects();
         lTeachers = new LoTeachers();
-        lAllCourses = new LoCourses();
+        lAllSubjects = new LoSubjects();
         lTrainingCourses = new LoTrainingCourses();
         assigningList = new AssigningList();
         try {
@@ -83,8 +83,8 @@ public class Controller implements ActionListener {
         cdSignOutButton = cdWindow.getSignOutButton();
         cdSignOutButton.addActionListener(this);
         cdClassList = cdWindow.getClassListBox();
-        for (int i = 0; i < lAllCourses.getClasses().size(); i++) {
-            cdClassList.addItem(lAllCourses.getClasses().get(i).getName());
+        for (int i = 0; i < lAllSubjects.getSubjects().size(); i++) {
+            cdClassList.addItem(lAllSubjects.getSubjects().get(i).getName());
         }
         cdUpdateLabel = cdWindow.getUpdateLabel();
     }
@@ -107,8 +107,8 @@ public class Controller implements ActionListener {
         }
         adTeacherList.setSelectedIndex(0);
         adClassList = adminWindow.getClassList();
-        for (int i = 0; i < lCourses.getClasses().size(); i++) {
-            adClassList.addItem(lCourses.getClasses().get(i).toString());
+        for (int i = 0; i < lSubjects.getSubjects().size(); i++) {
+            adClassList.addItem(lSubjects.getSubjects().get(i).toString());
         }
         adClassList.setSelectedIndex(0);
     }
@@ -118,8 +118,9 @@ public class Controller implements ActionListener {
          * opens the ptt director window and adds actions to the buttons initiates local
          * accessibility for certain variables
          */
-        pttWindow = new PTTDirectorWindow(assigningList);
+        pttWindow = new PTTDirectorWindow();
         pttTeacherCourseList = pttWindow.getList();
+        pttTeacherCourseList.setListData(assigningList.stringArray());
         pttApproveButton = pttWindow.getApproveButton();
         pttApproveButton.addActionListener(this);
         pttDisapproveButton = pttWindow.getDisapproveButton();
@@ -164,9 +165,9 @@ public class Controller implements ActionListener {
             String[] a = pttWindow.getArray();
             a[index] = a[index] + " \u2714";
 
-            ronnieBoy.getQualifiedTeacher().add(a[index]);
+            approvedList.getQualifiedTeacher().add(a[index]);
             pttTeacherCourseList.setSelectedIndex(index);
-            pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
+            pttTeacherCourseList.setCellRenderer(new CellRenderer(cellRenderer));
 
         }
 
@@ -176,9 +177,9 @@ public class Controller implements ActionListener {
             String[] a = pttWindow.getArray();
             a[index] = a[index] + " \u2715";
 
-            ronnieBoy.getQualifiedTeacher().add(a[index]);
+            approvedList.getQualifiedTeacher().add(a[index]);
             pttTeacherCourseList.setSelectedIndex(index);
-            pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
+            pttTeacherCourseList.setCellRenderer(new CellRenderer(cellRenderer));
             System.out.println(a[0]);
 
         }
@@ -189,14 +190,14 @@ public class Controller implements ActionListener {
          * creates a course based on the name passed then adds this to the list of
          * courses repopulates the textField with class id prompt
          */
-        lCourses.addCourse(new Course(courseName));
+        lSubjects.addSubject(new Subject(courseName));
         cdUpdateLabel.setText("Course: " + courseName + " Added!");
     }
 
     public void assignTeacherTC() {
-        Course course = null;
+        Subject course = null;
         Teacher teacher = null;
-        for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+        for (Map.Entry<Subject, Teacher> entry : assigningList.getAssigningList().entrySet()) {
             course = entry.getKey();
             teacher = entry.getValue();
             System.out.print(course.toString() + " " + teacher.toString());
@@ -216,11 +217,11 @@ public class Controller implements ActionListener {
     }
 
     public void updateMap(String classString, String teacherString) {
-        Course currentClass = null;
+        Subject currentClass = null;
         Teacher currentTeacher = null;
-        for (int i = 0; i < lCourses.getClasses().size(); i++) {
-            if (lCourses.getClasses().get(i).getName().equals(classString)) {
-                currentClass = lCourses.getClasses().get(i);
+        for (int i = 0; i < lSubjects.getSubjects().size(); i++) {
+            if (lSubjects.getSubjects().get(i).getName().equals(classString)) {
+                currentClass = lSubjects.getSubjects().get(i);
                 break;
             }
         }
@@ -239,8 +240,8 @@ public class Controller implements ActionListener {
         adMapDisplay = adminWindow.getMapDisplay();
         String[] pairs = new String[assigningList.getAssigningList().size()];
         int counter = 0;
-        for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
-            Course matchedClass = entry.getKey();
+        for (Map.Entry<Subject, Teacher> entry : assigningList.getAssigningList().entrySet()) {
+            Subject matchedClass = entry.getKey();
             Teacher matchedTeacher = entry.getValue();
             pairs[counter] = matchedClass.getName() + " - " + matchedTeacher.getName();
             counter++;
@@ -272,7 +273,7 @@ public class Controller implements ActionListener {
                 String tc = scanner.next();
                 String subject = scanner.next();
                 lTrainingCourses.addCourse(new TrainingCourse(tc, subject));
-                lAllCourses.addCourse(new Course(subject));
+                lAllSubjects.addSubject(new Subject(subject));
             }
         }
 

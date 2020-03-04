@@ -1,10 +1,10 @@
 package model;
 
-public class Course {
+public class Subject {
 	private String name;
 	private Teacher teacher;
 
-	public Course(String name) {
+	public Subject(String name) {
 		this.name = name;
 	}
 	

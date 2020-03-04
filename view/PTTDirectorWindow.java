@@ -18,14 +18,12 @@ public class PTTDirectorWindow extends JFrame {
     private JButton disapproveButton;
     private JButton signOut;
     private String[] array;
-    AssigningList list;
 
-    public PTTDirectorWindow(AssigningList list) {
+    public PTTDirectorWindow() {
         this.setTitle("PTT Director");
         this.setResizable(true);
         this.setSize(500, 330);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.list = list;
         list1 = new JList<>();
         TopString = new JLabel("All Teachers Are Being Trained For Assigned Courses");
         TopString2 = new JLabel("Please Approve or Disapprove");
@@ -46,10 +44,6 @@ public class PTTDirectorWindow extends JFrame {
 
         disapproveButton.setBounds(350, 180, 100, 35);
         signOut.setBounds(350, 220, 100, 35);
-
-        list.getAssigningList();
-        array = list.stringArray();
-        list1.setListData(array);
 
         list1.setBounds(15, 140, 300, 120);  // Positions the slots within the JFrame
         JPanel panel = new JPanel();
@@ -79,8 +73,5 @@ public class PTTDirectorWindow extends JFrame {
 
     public String[] getArray() {
         return array;
-    }
-    public void setList(AssigningList as){
-        this.list = as;
     }
 }

@@ -22,7 +22,7 @@ public class AdminView extends JFrame {
 	JComboBox<String> teacherList, classList;
 	JList<String> mapDisplay;
 	LoTeachers teachers;
-	LoCourses classes;
+	LoSubjects classes;
 	
 	
 	public AdminView() {
