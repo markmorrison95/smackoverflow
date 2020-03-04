@@ -4,22 +4,22 @@ import java.util.ArrayList;
 
 // List of Classes
 public class LoSubjects {
-	private ArrayList<Subject> classes;
+	private ArrayList<Subject> subjects;
 	
 	public LoSubjects() {
-		this.classes = new ArrayList<Subject>();
+		this.subjects = new ArrayList<Subject>();
 	}
 	
 	public ArrayList<Subject> getSubjects() {
-		return this.classes;
+		return this.subjects;
 	}
 	
 	public void addSubject(Subject c) {
-		this.classes.add(c);
+		this.subjects.add(c);
 	}
 	
 	public Subject find(String courseName) {
-		for (Subject c : classes) {
+		for (Subject c : subjects) {
 			if (c.getName().equals(courseName)) {
 				return c;
 			}
@@ -28,7 +28,7 @@ public class LoSubjects {
 	}
 	
 	public void print() {
-		for (Subject c : classes) {
+		for (Subject c : subjects) {
 			System.out.println(c);
 		}
 	}

@@ -31,7 +31,6 @@ public class Controller implements ActionListener {
     PTTDirectorWindow pttWindow;
     private LoSubjects lSubjects, lAllSubjects;
     private LoTeachers lTeachers;
-    private Subject assignedCourse;
     private ApprovedList approvedList;
     private LoTrainingCourses lTrainingCourses;
     private AdminView adminWindow;
@@ -53,8 +52,6 @@ public class Controller implements ActionListener {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        lTeachers.printTeacher();
-        lTrainingCourses.printTcourses();
         homeWindow = new HomeWindow();
         homeCDButton = homeWindow.getCourseDirectorButton();
         homeCDButton.addActionListener(this);
@@ -129,7 +126,7 @@ public class Controller implements ActionListener {
         pttDisapproveButton.addActionListener(this);
         pttSignOutButton = pttWindow.getSignOut();
         pttSignOutButton.addActionListener(this);
-        
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -169,8 +166,6 @@ public class Controller implements ActionListener {
             approvedList.getQualifiedTeacher().add(approvalList[index]);
             pttTeacherCourseList.setSelectedIndex(index);
             pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
-            System.out.println(approvalList[0]);
-
         }
 
         if (e.getSource() == pttDisapproveButton) {
@@ -180,8 +175,13 @@ public class Controller implements ActionListener {
             pttTeacherCourseList.setSelectedIndex(index);
             pttTeacherCourseList.setCellRenderer(new CellRenderer(CellRenderer));
         }
-        if(e.getSource() == pttSignOutButton){
+        if (e.getSource() == pttSignOutButton) {
             signOut(pttWindow);
+            try {
+                writeToFile();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -200,12 +200,10 @@ public class Controller implements ActionListener {
         for (Map.Entry<Subject, Teacher> entry : assigningList.getAssigningList().entrySet()) {
             course = entry.getKey();
             teacher = entry.getValue();
-            System.out.print(course.toString() + " " + teacher.toString());
             for (int i = 0; i < lTrainingCourses.getListOfTC().size(); i++) {
                 TrainingCourse tCourse = lTrainingCourses.getListOfTC().get(i);
                 if (course.getName().equals(tCourse.getSubjectName())) {
                     tCourse.setTeacher(teacher);
-                    System.out.println(tCourse.getTeacher().toString());
                 }
             }
         }
@@ -254,9 +252,6 @@ public class Controller implements ActionListener {
         while (scanner.hasNextLine()) {
             if (!finishedTeachers) {
                 nextString = scanner.next();
-                if (nextString.matches(".*\\d.*")) {
-                    nextString = scanner.next();
-                }
                 if (nextString.contains("TrainingCourses")) {
                     scanner.nextLine();
                     finishedTeachers = true;
@@ -267,6 +262,9 @@ public class Controller implements ActionListener {
             if (finishedTeachers) {
                 String tc = scanner.next();
                 String subject = scanner.next();
+                if (tc.equals("Teachers")) {
+                    break;
+                }
                 lTrainingCourses.addCourse(new TrainingCourse(tc, subject));
                 lAllSubjects.addSubject(new Subject(subject));
             }
@@ -278,13 +276,14 @@ public class Controller implements ActionListener {
     * 
     */
     public void writeToFile() throws IOException {
-        File file = new File("TeachersClasses.txt");
+
+        File file = new File("PermanentInfo.txt");
         FileOutputStream fileOut = new FileOutputStream(file);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileOut));
-        bw.write("Teacher, Class Assigned to:");
+        bw.write("Teachers:");
+        bw.newLine();
         for (Teacher teacher : lTeachers.getListOfTeachers()) {
-            // assignedCourse = hasmap.get(teacher);
-            bw.write(teacher + " " + assignedCourse);
+            bw.write(teacher.getName());
             bw.newLine();
         }
         bw.write("TrainingCourses, Subject");
@@ -293,6 +292,13 @@ public class Controller implements ActionListener {
             bw.write(tc.getCourseName() + " " + tc.getSubjectName());
             bw.newLine();
         }
+        bw.write("Teachers Assigned to Classes:");
+        bw.newLine();
+        for (String s : approvedList.getQualifiedTeacher()) {
+            bw.write(s);
+            bw.newLine();
+        }
+
         bw.close();
     }
 }

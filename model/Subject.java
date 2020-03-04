@@ -1,15 +1,15 @@
 package model;
 
 public class Subject {
-	private String name;
+	private String subjectName;
 	private Teacher teacher;
 
 	public Subject(String name) {
-		this.name = name;
+		this.subjectName = name;
 	}
 	
 	public String getName() {
-		return this.name;
+		return this.subjectName;
 	}
 	
 	public Teacher getTeacher() {

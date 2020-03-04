@@ -1,6 +1,5 @@
-package view;// Chris Castaldo
+package view;
 
-// 2495856C
 
 import javax.swing.*;
 
@@ -8,13 +7,9 @@ import java.awt.*;
 
 public class PTTDirectorWindow extends JFrame {
 
-    private JList<String> list1;
-    private JLabel TopString;
-    private JLabel TopString2;
-    private JLabel CoursesString;
-    private JButton approveButton;
-    private JButton disapproveButton;
-    private JButton signOut;
+    private JList<String> pairedList;
+    private JLabel topString, topString2, coursesString;
+    private JButton approveButton, disapproveButton, signOut;
     private String[] array;
 
     public PTTDirectorWindow() {
@@ -22,37 +17,37 @@ public class PTTDirectorWindow extends JFrame {
         this.setResizable(true);
         this.setSize(500, 330);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        list1 = new JList<>();
-        TopString = new JLabel("All Teachers Are Being Trained For Assigned Courses");
-        TopString2 = new JLabel("Please Approve or Disapprove");
-        CoursesString = new JLabel("Teacher : Course");
+        pairedList = new JList<>();
+        topString = new JLabel("All Teachers Are Being Trained For Assigned Courses");
+        topString2 = new JLabel("Please Approve or Disapprove");
+        coursesString = new JLabel("Teacher : Course");
         approveButton = new JButton("Approve");
         disapproveButton = new JButton("Disapprove");
         signOut = new JButton("Sign Out");
-        TopString.setBounds(15, 20, 1000, 35);
-        TopString.setFont(new Font("Arial", Font.PLAIN, 14));
+        topString.setBounds(15, 20, 1000, 35);
+        topString.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        TopString2.setBounds(15, 40, 1000, 35);
-        TopString2.setFont(new Font("Arial", Font.PLAIN, 14));
+        topString2.setBounds(15, 40, 1000, 35);
+        topString2.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        CoursesString.setBounds(20, 100, 300, 35);
-        CoursesString.setFont(new Font("Arial", Font.PLAIN, 14));
+        coursesString.setBounds(20, 100, 300, 35);
+        coursesString.setFont(new Font("Arial", Font.PLAIN, 14));
 
         approveButton.setBounds(350, 140, 100, 35);
 
         disapproveButton.setBounds(350, 180, 100, 35);
         signOut.setBounds(350, 220, 100, 35);
 
-        list1.setBounds(15, 140, 300, 120);  // Positions the slots within the JFrame
+        pairedList.setBounds(15, 140, 300, 120);  // Positions the slots within the JFrame
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.add(TopString);
-        panel.add(TopString2);
-        panel.add(CoursesString);
+        panel.add(topString);
+        panel.add(topString2);
+        panel.add(coursesString);
         panel.add(signOut);
         panel.add(approveButton);
         panel.add(disapproveButton);
-        panel.add(list1);
+        panel.add(pairedList);
         this.add(panel);
         this.setSize(500, 300);
         this.setLocationRelativeTo(null);
@@ -67,7 +62,7 @@ public class PTTDirectorWindow extends JFrame {
 
     public JButton getDisapproveButton() { return this.disapproveButton; }
 
-    public JList<String> getList() { return list1; }
+    public JList<String> getList() { return pairedList; }
 
     public String[] getArray() {
         return array;
