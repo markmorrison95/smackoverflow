@@ -19,8 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 public class Controller implements ActionListener {
-    private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton,
-            homeAdminButton, homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton;
+    private JButton cdSignOutButton, cdAddClassButton, adAssignButton, adSendButton, adSignOutButton, homeAdminButton,
+            homeCDButton, homePttButton, pttApproveButton, pttDisapproveButton;
     private JComboBox<String> adTeacherList, adClassList, cdClassList;
     private JList<String> adMapDisplay;
     private AssigningList assigningList;
@@ -80,12 +80,16 @@ public class Controller implements ActionListener {
         cdSignOutButton.addActionListener(this);
         cdClassList = cdWindow.getClassListBox();
         for (int i = 0; i < lAllCourses.getClasses().size(); i++) {
-			cdClassList.addItem(lAllCourses.getClasses().get(i).getName());
+            cdClassList.addItem(lAllCourses.getClasses().get(i).getName());
         }
         cdUpdateLabel = cdWindow.getUpdateLabel();
     }
 
     public void admin() {
+        /**
+         * opens the admin window and adds actions to the buttons initiates local
+         * accessibility for certain variables
+         */
         adminWindow = new AdminView();
         adAssignButton = adminWindow.getAssignButton();
         adAssignButton.addActionListener(this);
@@ -106,20 +110,15 @@ public class Controller implements ActionListener {
     }
 
     public void pttDirector() {
+        /**
+         * opens the ptt director window and adds actions to the buttons initiates local
+         * accessibility for certain variables
+         */
         PTTDirectorWindow pttWindow = new PTTDirectorWindow();
         pttApproveButton = pttWindow.getApproveButton();
         pttApproveButton.addActionListener(this);
         pttDisapproveButton = pttWindow.getDisapproveButton();
         pttDisapproveButton.addActionListener(this);
-    }
-
-    public void addClass(String courseName) {
-        /**
-         * creates a course based on the name passed then adds this to the list of
-         * courses repopulates the textField with class id prompt
-         */
-        lCourses.addCourse(new Course(courseName));
-        cdUpdateLabel.setText("Course: " + courseName + " Added!");
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -136,7 +135,7 @@ public class Controller implements ActionListener {
             pttDirector();
         }
         if (e.getSource() == cdAddClassButton) {
-            addClass((String)cdClassList.getSelectedItem());
+            addClass((String) cdClassList.getSelectedItem());
         }
         if (e.getSource() == cdSignOutButton) {
             signOut(cdWindow);
@@ -153,39 +152,44 @@ public class Controller implements ActionListener {
         if (e.getSource() == adSignOutButton) {
             signOut(adminWindow);
         }
-        if(e.getSource() == pttApproveButton){
+        if (e.getSource() == pttApproveButton) {
 
         }
-        if(e.getSource() == pttDisapproveButton){
-            
+        if (e.getSource() == pttDisapproveButton) {
+
         }
     }
 
-    public void assignTeacherTC(){
+    public void addClass(String courseName) {
+        /**
+         * creates a course based on the name passed then adds this to the list of
+         * courses repopulates the textField with class id prompt
+         */
+        lCourses.addCourse(new Course(courseName));
+        cdUpdateLabel.setText("Course: " + courseName + " Added!");
+    }
+
+    public void assignTeacherTC() {
         Course course = null;
         Teacher teacher = null;
         for (Map.Entry<Course, Teacher> entry : assigningList.getAssigningList().entrySet()) {
             course = entry.getKey();
             teacher = entry.getValue();
             System.out.print(course.toString() + " " + teacher.toString());
-            for (int i=0; i < lTrainingCourses.getListOfTC().size(); i++) {
+            for (int i = 0; i < lTrainingCourses.getListOfTC().size(); i++) {
                 /**
-                 * wasn't initializing tCourse to equal the training course it had reached in the list
-                 * changed it so that gets set each loop and is just a method variable because only
-                 * being used here
+                 * wasn't initializing tCourse to equal the training course it had reached in
+                 * the list changed it so that gets set each loop and is just a method variable
+                 * because only being used here
                  */
                 TrainingCourse tCourse = lTrainingCourses.getListOfTC().get(i);
-                if (course.getName().equals(tCourse.getSubjectName())){
+                if (course.getName().equals(tCourse.getSubjectName())) {
                     tCourse.setTeacher(teacher);
                     System.out.println(tCourse.getTeacher().toString());
                 }
             }
         }
     }
-
-
-
-
 
     public void updateMap(String classString, String teacherString) {
         Course currentClass = null;
