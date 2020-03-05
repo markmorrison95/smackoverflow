@@ -42,16 +42,6 @@ public class TrainingCourse {
     public Teacher getTeacher(){
         return this.teacherName;
     }
-
-    // gets list of teachers
-    public ArrayList<Teacher> getListOfTeachers(){
-        return listOfTeachers;
-    }
-    
-    // adds tecaher to a list of teachers
-    public void addTeacherToCourse(Teacher teacher){
-        listOfTeachers.add(teacher);
-    }
     
     // to string method
     public String toString(){
