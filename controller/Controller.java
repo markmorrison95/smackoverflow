@@ -214,12 +214,13 @@ public class Controller implements ActionListener {
         }
     }
 
-    /*
-    * This method takes in the name of a class and  the name of a teacher (which have previously
-    * been selected in the JList). The complete lists of classes and teachers are iterated through and when the 
-    * input strings match the name of a class and teacher, they are added to the assigning list hashmap
-    */
+
     public void updateMap(String classString, String teacherString) {
+        /*
+         * This method takes in the name of a class and  the name of a teacher (which have previously
+         * been selected in the JList). The complete lists of classes and teachers are iterated through and when the 
+         * input strings match the name of a class and teacher, they are added to the assigning list hashmap
+         */
         Subject currentClass = null;
         Teacher currentTeacher = null;
         for (int i = 0; i < lSubjects.getSubjects().size(); i++) {
@@ -239,11 +240,12 @@ public class Controller implements ActionListener {
         assigningList.getAssigningList().put(currentClass, currentTeacher);
     }
 
-    /*
-    * This method uses the class/teacher pairs from the hashmap, turns them into a string,
-    * and adds the string to the JList
-    */
+
     public void updateMapDisplay() {
+       /**
+        * This method uses the class/teacher pairs from the hashmap, turns them into a string,
+        * and adds the string to the JList
+        */
         adMapDisplay = adminWindow.getMapDisplay();
         String[] pairs = new String[assigningList.getAssigningList().size()];
         int counter = 0;
@@ -259,6 +261,12 @@ public class Controller implements ActionListener {
     }
 
     public void readFileIn(String fileName) throws FileNotFoundException {
+        /**
+         * reads in info from the file at the start of the program
+         * gets all the teachers and creates an object and adds to the list of teachers
+         * 
+         * does the same with the training courses and subjects
+         */
         Scanner scanner = new Scanner(new File(fileName));
         boolean finishedTeachers = false;
         String nextString;
@@ -286,11 +294,12 @@ public class Controller implements ActionListener {
 
     }
 
-    /* 
-    * 
-    */
-    public void writeToFile() throws IOException {
 
+    public void writeToFile() throws IOException {
+        /**
+         * re adds all the teachers to the file and all the training courses and the subjects
+         * then adds the pairs of teachers assigned to classes at the end
+         */
         File file = new File("PermanentInfo.txt");
         FileOutputStream fileOut = new FileOutputStream(file);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileOut));
