@@ -5,14 +5,11 @@ import java.util.ArrayList;
 public class LoTrainingCourses{
     protected String courseID;
     protected ArrayList<TrainingCourse> listOfTC;
-    protected int numOfCourses;
 
-    // list constructor
-    // passed an int, for number of indices?
+    // constructor
     public LoTrainingCourses() {
         listOfTC = new ArrayList<TrainingCourse>();
     }
-
 
     // adds a training course to the array list
     public void addCourse(TrainingCourse trainingCourse){
@@ -24,10 +21,12 @@ public class LoTrainingCourses{
                 listOfTC.remove(trainingCourse);
     }
 
-    // getters
+    // get list of training courses
     public ArrayList<TrainingCourse> getListOfTC() {
         return listOfTC;
     }
+    
+    // print method
     public void printTcourses(){
         for(TrainingCourse tc : listOfTC){
             System.out.println(tc);
