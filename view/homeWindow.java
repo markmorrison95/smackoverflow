@@ -62,6 +62,9 @@ public class HomeWindow extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+	 * getters to allow access from controller
+	 */
     public JButton getCourseDirectorButton(){
         return courseDirector;
     }

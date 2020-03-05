@@ -1,6 +1,5 @@
 package view;
 
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -38,7 +37,7 @@ public class PTTDirectorWindow extends JFrame {
         disapproveButton.setBounds(350, 180, 100, 35);
         signOut.setBounds(350, 220, 100, 35);
 
-        pairedList.setBounds(15, 140, 300, 120);  // Positions the slots within the JFrame
+        pairedList.setBounds(15, 140, 300, 120); // Positions the slots within the JFrame
         JPanel panel = new JPanel();
         panel.setLayout(null);
         panel.add(topString);
@@ -54,15 +53,24 @@ public class PTTDirectorWindow extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * getters to allow access from controller
+     */
     public JButton getSignOut() {
         return signOut;
     }
 
-    public JButton getApproveButton() { return this.approveButton; }
+    public JButton getApproveButton() {
+        return this.approveButton;
+    }
 
-    public JButton getDisapproveButton() { return this.disapproveButton; }
+    public JButton getDisapproveButton() {
+        return this.disapproveButton;
+    }
 
-    public JList<String> getList() { return pairedList; }
+    public JList<String> getList() {
+        return pairedList;
+    }
 
     public String[] getArray() {
         return array;
