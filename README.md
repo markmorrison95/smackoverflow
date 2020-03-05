@@ -2,7 +2,7 @@
 
 This system is designed to be used by three different users: a Course Director, an Administrator, and a PTT Director. 
 
-The log in screen will allow a user to select their role from a drop-down list. This will tell the system what type of user is logging in, and which GUI screen to show them.
+The log in screen will allow a user to select their role from a list. This will tell the system what type of user is logging in, and which GUI screen to show them.
 
 In the CourseDirector screen, the user will be able to select which classes need cover from a drop-down list. Once this is complete, the close button will close the CourseDirectorView window.
 
