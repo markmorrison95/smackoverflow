@@ -7,17 +7,22 @@ Gareth
 Ron
 Nathan
 Moses
+Alice
+Bob
 Julia
 Hugh
 Rhys
 TrainingCourses, Subject
 MathsTraining Maths
 WineTastingTraining Wine-Tasting
-PirateTraining Pirating
+PirateTraining Pirating(Computer)
+PirateShipTraining Pirating(Ship)
 EnglishTraining English
 FrenchTraining French
 CryptoTraining Crypto
 FencingTraining Fencing
 McDonaldsAprecationTraining McDonalds-Appreciation
+LionTamingTraining Lion-Training
+Sauce101Training Sauce101
 Teachers Assigned to Classes:
 Maths : Mark ✔
