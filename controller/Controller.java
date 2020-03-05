@@ -194,6 +194,11 @@ public class Controller implements ActionListener {
         cdUpdateLabel.setText("Course: " + courseName + " Added!");
     }
 
+    /*
+    * This method iterates through the assigning list hash map and for each teacher/class combination,
+    * assigns the teacher to an appropriate training course (specific to their class) by setting the training
+    *course's teacher attribute and adds that course to the complete list of training courses
+    */
     public void assignTeacherTC() {
         Subject course = null;
         Teacher teacher = null;
@@ -209,6 +214,11 @@ public class Controller implements ActionListener {
         }
     }
 
+    /*
+    * This method takes in the name of a class and  the name of a teacher (which have previously
+    * been selected in the JList). The complete lists of classes and teachers are iterated through and when the 
+    * input strings match the name of a class and teacher, they are added to the assigning list hashmap
+    */
     public void updateMap(String classString, String teacherString) {
         Subject currentClass = null;
         Teacher currentTeacher = null;
@@ -229,6 +239,10 @@ public class Controller implements ActionListener {
         assigningList.getAssigningList().put(currentClass, currentTeacher);
     }
 
+    /*
+    * This method uses the class/teacher pairs from the hashmap, turns them into a string,
+    * and adds the string to the JList
+    */
     public void updateMapDisplay() {
         adMapDisplay = adminWindow.getMapDisplay();
         String[] pairs = new String[assigningList.getAssigningList().size()];
