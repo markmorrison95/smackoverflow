@@ -7,6 +7,10 @@ public class LoSubjects {
 	private ArrayList<Subject> subjects;
 	
 	public LoSubjects() {
+		/**
+         * doesn't take any variables when initiated so can be created at start of program
+         * and add Subjects when the file is read in
+         */
 		this.subjects = new ArrayList<Subject>();
 	}
 	

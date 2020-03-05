@@ -3,28 +3,27 @@ package model;
 import java.util.ArrayList;
 
 public class LoTrainingCourses{
-    protected String courseID;
-    protected ArrayList<TrainingCourse> listOfTC;
-    protected int numOfCourses;
+    private ArrayList<TrainingCourse> listOfTC;
 
-    // list constructor
-    // passed an int, for number of indices?
     public LoTrainingCourses() {
+        /**
+         * doesn't take any variables when initiated so can be created at start of program
+         * and add courses when the file is read in
+         */
         listOfTC = new ArrayList<TrainingCourse>();
     }
 
 
-    // adds a training course to the array list
     public void addCourse(TrainingCourse trainingCourse){
-                listOfTC.add(trainingCourse);
+        /**
+         * add training course to the list
+         */
+        listOfTC.add(trainingCourse);
     }
 
-    // removes a training course from the array list
-    public void removeCourse(TrainingCourse trainingCourse){
-                listOfTC.remove(trainingCourse);
-    }
-
-    // getters
+    /**
+     * getters for variables
+     */
     public ArrayList<TrainingCourse> getListOfTC() {
         return listOfTC;
     }

@@ -2,24 +2,21 @@ package model;
 
 public class Subject {
 	private String subjectName;
-	private Teacher teacher;
 
 	public Subject(String name) {
+		/**
+		 * just takes the subject name as a variable
+		 */
 		this.subjectName = name;
 	}
-	
+
+	/**
+	 * getters for variables
+	 */
 	public String getName() {
 		return this.subjectName;
 	}
-	
-	public Teacher getTeacher() {
-		return this.teacher;
-	}
-	
-	public void setTeacher(Teacher newTeacher) {
-		this.teacher = newTeacher;
-	}
-	
+
 	public String toString() {
 		return this.getName();
 	}	

@@ -1,11 +1,12 @@
 package model;
 
 public class Teacher extends Person{
-    /**
-     * id number will start at 500 and increase
-     * means all admins can have an id starting with 5
-     */
     public Teacher(String name){
+        /**
+         * just invokes the super constructor
+         * person class not that necessary for this program but would
+         * make expanding easier
+         */
         super(name);
     }
 

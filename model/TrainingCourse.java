@@ -9,13 +9,21 @@ public class TrainingCourse {
     private Teacher teacherName;
     private ArrayList<Teacher> listOfTeachers;
 
-    // constructor
     public TrainingCourse(String name, String subject){
+        /**
+         * constructor takes the name of training course and the name of the subject
+         * it is linked with
+         * has an array list of teachers so when a teacher is added to the training course they
+         * are stored here
+         */
         this.courseName = name;
         this.subjectName = subject;
         listOfTeachers = new ArrayList<Teacher>();
     }
 
+    /**
+     * getters and setters for variables
+     */
     public String getCourseName(){
         return courseName;
     }
