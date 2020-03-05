@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import model.*;
 
-
+// The Administrator Window
 public class AdminView extends JFrame {
 	JPanel panel, titlePanel, selectionPanel, buttonPanel, infoPanel, rightPanel;
 	JButton assign, send, signOut;
@@ -31,12 +31,15 @@ public class AdminView extends JFrame {
 		panel.setLayout(new GridLayout(1, 2));
 		panel.setBorder(new EmptyBorder(30, 30, 30, 30));
 		
+		// The right panel contains the title, the message center, the combo boxes, and the buttons
 		rightPanel = new JPanel();
 		rightPanel.setLayout(new GridLayout(3, 1));
 		
 		titlePanel = new JPanel();
 		selectionPanel = new JPanel();
 		buttonPanel = new JPanel();
+		
+		// The info panel contains the JList of matched classes and teachers
 		infoPanel = new JPanel();
 
 		selectionPanel.setLayout(new GridLayout(1,2));
@@ -45,16 +48,23 @@ public class AdminView extends JFrame {
 		JLabel title = new JLabel("Administrator");	
 		title.setFont(new Font("Arial", Font.BOLD, 30));
 		
+		// The message center is empty until the teachers are added to training courses
 		messageCenter = new JLabel("");
 		messageCenter.setFont(new Font("Arial", Font.PLAIN, 11));
 		
+		// The assign button matches the teacher to a class and displays the pair on the JList
 		assign = new JButton("Match Teacher to Class");
 		assign.setFont(new Font("Arial", Font.PLAIN, 18));
+		
+		// The send button assigns the currently selected teachers to appropriate training courses
 		send = new JButton("Assign Selected Teachers to Training Courses");
 		send.setFont(new Font("Arial", Font.PLAIN, 18));
+		
+		// The sign out button closes the administrator window and returns the user to the home screen
 		signOut = new JButton("Sign Out");
 		signOut.setFont(new Font("Arial", Font.PLAIN, 18));
 		
+		// The user selects a teacher and class from each of these boxes before pressing the assign button
 		teacherList = new JComboBox<String>();
 		subjectList = new JComboBox<String>();	
 		
@@ -87,6 +97,7 @@ public class AdminView extends JFrame {
 		
 	}
 	
+	// Empties the JList of paired teachers/classes
 	public void resetMapDisplay() {
 		String[] empty = new String[5];
 		for (int i = 0; i < 5; i++) {
@@ -96,6 +107,8 @@ public class AdminView extends JFrame {
 		mapDisplay.setListData(empty);
 		
 	}
+	
+	// Button getters
 	public JButton getAssignButton(){
 		return assign;
 	}
@@ -105,15 +118,21 @@ public class AdminView extends JFrame {
 	public JButton getSignOutButton(){
 		return signOut;
 	}
+	
+	// ComboBox getters
 	public JComboBox<String> getTeacherList(){
 		return teacherList;
 	}
 	public JComboBox<String> getClassList(){
 		return subjectList;
 	}
+	
+	// JList getter
 	public JList<String> getMapDisplay(){
 		return mapDisplay;
 	}
+	
+	// Message Center getter
 	public JLabel getMessageCenter(){
 		return messageCenter;
 	}
