@@ -13,7 +13,7 @@ public class LoTrainingCourses{
         listOfTC = new ArrayList<TrainingCourse>();
     }
 
-
+    // adds a training course to the array list
     public void addCourse(TrainingCourse trainingCourse){
         /**
          * add training course to the list
@@ -27,6 +27,8 @@ public class LoTrainingCourses{
     public ArrayList<TrainingCourse> getListOfTC() {
         return listOfTC;
     }
+    
+    // print method
     public void printTcourses(){
         for(TrainingCourse tc : listOfTC){
             System.out.println(tc);
