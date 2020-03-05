@@ -16,35 +16,45 @@ public class HomeWindow extends JFrame {
 
     public HomeWindow() {
         this.setTitle("Home");
-        main = new JPanel();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setResizable(true);
+        main = new JPanel();
+        /**
+         * creating the panels and setting the layout for adding components
+         */
         main.setBorder(new EmptyBorder(30, 30, 30, 30));
-        main.setLayout(new GridLayout(3, 1));
+        main.setLayout(new GridLayout(2, 1));
         JPanel top = new JPanel();
         top.setLayout(new GridLayout(1, 1));
-        JPanel middle = new JPanel();
-        middle.setLayout(new GridLayout(3,1));
         JPanel bottom = new JPanel();
-        bottom.setLayout(new GridLayout(1,1));
+        bottom.setLayout(new GridLayout(3,1));
+        /**
+         * creating all the buttons for window.
+         * there is one for each screen that will be directed 
+         * the actions for these are initiated in the controller
+         */
         courseDirector = new JButton("Course Director");
         courseDirector.setFont(new Font("Arial", Font.PLAIN, 22));
-        courseDirector.setSize(50, 10);
         admin = new JButton("Admin");
         admin.setFont(new Font("Arial", Font.PLAIN, 22));
         pttDirector = new JButton("Ptt Director");
         pttDirector.setFont(new Font("Arial", Font.PLAIN, 22));
-        middle.add(courseDirector);
-        middle.add(admin);
-        middle.add(pttDirector);
+        /**
+         * information label
+         */
         JLabel info = new JLabel("Sign in ID:");
         info.setFont(new Font("Arial", Font.PLAIN, 20));
+        /**
+         * adding components to appropriate panel
+         */
+        bottom.add(courseDirector);
+        bottom.add(admin);
+        bottom.add(pttDirector);
         top.add(info);
-        updateLabel = new JLabel();
-        updateLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        bottom.add(updateLabel);
+        /**
+         * adding all panels to the main JFrame
+         */
         main.add(top);
-        main.add(middle);
         main.add(bottom);
         this.add(main);
         this.pack();
